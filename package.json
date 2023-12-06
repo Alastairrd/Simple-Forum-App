@@ -1,0 +1,11 @@
+{
+  "name": "myforum",
+  "version": "1.0.0",
+  "description": "A simple forum app, developed to continue developing skills surrounding dynamic web pages, utilising express, ejs, node.js and mysql.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alastair Ros-Davison",
+  "license": "ISC"
+}
