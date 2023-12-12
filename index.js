@@ -2,7 +2,7 @@
 const express = require("express");
 const ejs = require("ejs");
 const bodyParser = require("body-parser");
-const mySql = require("mysql")
+const mysql = require("mysql")
 
 // Create the express application object
 const app = express();
@@ -12,8 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Define the database connection
 const db = mysql.createConnection({
 	host: "localhost",
-	user: "appuser",
-	password: "ardforum",
+	user: "forumuser",
+	password: "ardforum2023",
 	database: "myForum",
 });
 
@@ -40,7 +40,9 @@ app.set("view engine", "ejs");
 // We want to use EJS's rendering engine
 app.engine("html", ejs.renderFile);
 
-
+let appData = {
+	appName: "Simple Forum app"
+}
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  All the routes will go in this file
 require("./routes/main")(app, appData);
 
