@@ -14,3 +14,36 @@ ADD COLUMN `datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CUR
 
 CREATE USER 'forumuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ardforum2023';
 GRANT ALL PRIVILEGES ON myForum.* TO 'forumuser'@'localhost';
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPostData`(IN postID INT)
+BEGIN
+	SELECT * FROM post_topics
+    WHERE postID = post_id;
+END
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getPosts`(IN input_id INT)
+BEGIN
+	SELECT * FROM post_topics
+    WHERE topic_id = input_id;
+END
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `selectTopicByID`(IN input_id INT)
+BEGIN
+
+SELECT * from topics where topic_id = input_id;
+	
+END
+DELIMITER ;
+
+DELIMITER //
+CREATE DEFINER=`root`@`localhost` PROCEDURE `topTopics`()
+BEGIN
+Select topic_id, COUNT(topic_id) FROM subscriptions GROUP BY topic_id ORDER BY COUNT(topic_id) DESC;
+END
+DELIMITER ;
+

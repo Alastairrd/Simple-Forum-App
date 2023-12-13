@@ -61,11 +61,11 @@ module.exports = function (app, forumData) {
 	//TODO design topic page template
 	app.get("/topic", async function (req, res) {
 		//topic name url from sql query
-		let inputTopicName = req.query.name;
+		let inputTopicID = req.query.id;
 
 		//call procedure to check post_topics views for relevant posts from passed in topic name
 		const results = await new Promise((resolve, reject) => {
-			db.query(`CALL getPosts(?)`, inputTopicName, (error, results) => {
+			db.query(`CALL getPosts(?)`, inputTopicID, (error, results) => {
 				if(error){
 					reject(error)
 				} else {
@@ -74,7 +74,7 @@ module.exports = function (app, forumData) {
 			}) 
 		});
 
-		let newData = Object.assign({}, forumData, { posts: results[0], topicName: req.query.name})
+		let newData = Object.assign({}, forumData, { posts: results[0], topic_id: req.query.id, topicName: req.query.name})
 
 		console.log(newData);
 
@@ -100,11 +100,11 @@ module.exports = function (app, forumData) {
 			}) 
 		});
 
-		let newData = Object.assign({}, forumData, { post: results[0], postID: req.query.id })
+		let newData = Object.assign({}, forumData, { post: results[0], postID: req.query.id, postTitle: req.query.title })
 
 
 
 		//render page with post date
-		res.render("post.ejs", forumData);
+		res.render("post.ejs", newData);
 	});
 };

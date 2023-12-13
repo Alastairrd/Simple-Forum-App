@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><%=title></title>
+		<title><%=postTitle%></title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 	</head>
 	<body>
@@ -18,24 +18,9 @@
 		<main>
 			<div class="main" id="selected_post">
 				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1>Welcome to <%=topicName%></h1>
-				<p>Most recent posts:</p>
-				<% for(let i = 0; i < posts.length; i++) { %>
-
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->
-				<a
-					href="/post?name=<%= encodeURIComponent(posts[i].title) %>"
-				>
-				<!--list the topic name and description-->
-					<div class="f_post">
-						<h1 class="post_title"><%= posts[i].title %></h1>
-						<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
-						<p class="content"><%= posts[i].content %></p>
-					</div>
-				</a>
-
-				<% } %>
+				<h1 class="post_title"><%=postTitle %></h1>
+				<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(post[0].username) %>"><%= post[0].username%></a></p>
+				<p class="content"><%=post[0].content%></p>
 			</div>
 		</main>
 	</body>
