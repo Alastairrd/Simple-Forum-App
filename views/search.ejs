@@ -1,44 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Welcome to <%appName%></title>
-    <link rel="stylesheet"  type="text/css" href="/main.css" />
-  </head>
-  <body>
-    <header>
-      <nav>
-        <div class="flex-container" id="logo">
-  
-        </div>
-        <div class="flex-container" id="hamburger">
-          
-        </div>
-        <div class="flex-container" id="search_Bar">
-          
-        </div>
-        <div class="flex-container" id="account">
-          
-        </div>
-      </nav>
-    </header>
-    <main>
-      <div id="top_Topics">
-        <div class="flex-container" id="post_1">
+	<head>
+		<title>Welcome to <%appName%></title>
+		<link rel="stylesheet" type="text/css" href="/main.css" />
+	</head>
+	<body>
+		<header>
+			<nav class="topnav">
+				<a class="active" href="">Home</a>
+				<a href="list">Topic List</a>
+				<a href="search">Search</a>
+				<div class="account">
+					<a href="login">Log in</a>
+				</div>
+			</nav>
+		</header>
+		<main>
+			<div class="main" id="top_Topics">
+				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
+				<h1>Featured Topics</h1>
+				<% for(let i = 0; i < topics.length; i++) { %>
 
-        </div>
-        <div class="flex-container" id="post_2">
-          
-        </div>
-        <div class="flex-container" id="post_3">
-          
-        </div>
-      </div>
-    </main>
-    
-    <h1>Placeholder text</h1>
+					<!--enclose everything in a link-->
+					<!--encodeURIComponent makes sure we can handle special characters-->
+				<a
+					href="/topic?name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
+				>
+				<!--list the topic name and description-->
+					<div class="f_post">
+						<h1><%= topics[i][0].topic_name %></h1>
+						<p><%= topics[i][0].topic_desc %></p>
+					</div>
+				</a>
 
-    <!--link section-->
-    <p><a href="">Placeholder link</a></p>
-
-  </body>
+				<% } %>
+			</div>
+		</main>
+	</body>
 </html>
