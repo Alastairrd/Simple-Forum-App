@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Welcome to <%appName%></title>
+		<title>Welcome to <%=appName %></title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 	</head>
 	<body>
@@ -24,7 +24,7 @@
 					<!--enclose everything in a link-->
 					<!--encodeURIComponent makes sure we can handle special characters-->
 				<a
-					href="/topic?name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
+					href="/topic?id=<%= topics[i][0].topic_id %>&name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
 				>
 				<!--list the topic name and description-->
 					<div class="f_post">

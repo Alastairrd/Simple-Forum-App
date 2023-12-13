@@ -40,11 +40,11 @@ app.set("view engine", "ejs");
 // We want to use EJS's rendering engine
 app.engine("html", ejs.renderFile);
 
-let appData = {
+let forumData = {
 	appName: "Simple Forum app"
 }
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  All the routes will go in this file
-require("./routes/main")(app, appData);
+require("./routes/main")(app, forumData);
 
 // Start the web app listening
 app.listen(port, () => console.log(`Forum app listening on port ${port}!`));

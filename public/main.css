@@ -38,13 +38,13 @@
     border-radius: 0px 0px 10px 10px;
 }
 
-.f_post {
+/* post styling */
+div.f_post {
     background-color: rgb(181, 179, 179);
     border: 5px solid black;
     padding: 5px;
     margin: 10px;
     border-radius: 10px;
-    
 }
 
 .f_post:hover {
@@ -52,9 +52,38 @@
     box-shadow: 3px 3px 10px black;
 }
 
-h1, p, a, .f_post {
+a, p, h1, .f_post{
     text-decoration: none;
     color: inherit;
-
 }
+
+h1.post_title{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 0px;
+    margin: 0px;
+} 
+
+p.author {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: italic;
+    font-size: 16px;
+    padding: 0px;
+    margin: 0px;
+}
+
+/*username link */
+a.username:hover {
+    text-shadow: 0px 0px 1px rgb(0, 0, 0);
+    color: blue;
+}
+
+/*content within post*/
+p.content {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: normal;
+    font-size: 14px;
+}
+
 

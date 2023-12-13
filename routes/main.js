@@ -47,73 +47,10 @@ module.exports = function (app, forumData) {
 		//assign this new databse data to the forumData object being passed to page
 		let newData = Object.assign({}, forumData, { topics: topTopics });
 
+		console.log(newData)
+
 		//render page with new data
-		console.log(newData.topics[0][0].topic_name);
 		res.render("index.ejs", newData);
-
-		// db.query(sqlquery, true, (error, results) => {
-		// 	if (error) {
-		// 		return console.error(error.message);
-		// 	}
-		// 	for (i = 0; i < 3; i++) {
-		// 		x = results[0][i].topic_id;
-		// 		topTopics[i] = x;
-		// 	}
-		//}
-
-		//     // seperate queries for each of the top three topics
-		//     //i have done this as when I used a for loop, the queries executed asynchronously
-		//     //and the index of the loop was not being used as it should
-
-		//     //topic 1
-		//     db.query(
-		//         `CALL selectTopicByID(?)`,
-		//         topTopics[0],
-		//         (error, selectResults) => {
-		//             if (error) {
-		//                 res.redirect("./");
-		//             }
-
-		//             topTopics[0] = Object.assign({}, selectResults[0]);
-
-		//         }
-		//     );
-
-		//     //topic 2
-		//     db.query(
-		//         `CALL selectTopicByID(?)`,
-		//         topTopics[1],
-		//         (error, selectResults) => {
-		//             if (error) {
-		//                 res.redirect("./");
-		//             }
-
-		//             topTopics[1] = Object.assign({}, selectResults[0]);
-
-		//         }
-		//     );
-
-		//     //topic 3
-		//     db.query(
-		//         `CALL selectTopicByID(?)`,
-		//         topTopics[2],
-		//         (error, selectResults) => {
-		//             if (error) {
-		//                 res.redirect("./");
-		//             }
-
-		//             topTopics[2] = Object.assign({}, selectResults[0]);
-
-		//         }
-		//     );
-
-		// 	let newData = Object.assign({}, forumData, { topics: topTopics });
-		// 	console.log(newData);
-
-		//     console.log(newData.topics[0].topic_name);
-
-		// 	res.render("index.ejs", newData);
-		// });
 	});
 
 	//TODO design list page
@@ -122,17 +59,52 @@ module.exports = function (app, forumData) {
 	});
 
 	//TODO design topic page template
-	app.get("/topic", function (req, res) {
+	app.get("/topic", async function (req, res) {
 		//topic name url from sql query
+		let inputTopicName = req.query.name;
+
+		//call procedure to check post_topics views for relevant posts from passed in topic name
+		const results = await new Promise((resolve, reject) => {
+			db.query(`CALL getPosts(?)`, inputTopicName, (error, results) => {
+				if(error){
+					reject(error)
+				} else {
+					resolve(results)
+				}
+			}) 
+		});
+
+		let newData = Object.assign({}, forumData, { posts: results[0], topicName: req.query.name})
+
+		console.log(newData);
+
+		//create new data object, add to forum data and pass in render function
 
 		//render topic page with topic data
-		res.render("topic.ejs", forumData);
+		res.render("topic.ejs", newData);
 	});
 
 	//TODO design topic page template
-	app.get("/topic-post", function (req, res) {
+	app.get("/post", async function (req, res) {
 		//url has to be topic/post url combo from sql query
+		let inputPostID = req.query.id;
+
+		//call procedure to check post_topics views for relevant posts from passed in topic name
+		const results = await new Promise((resolve, reject) => {
+			db.query(`CALL getPostData(?)`, inputPostID, (error, results) => {
+				if(error){
+					reject(error)
+				} else {
+					resolve(results)
+				}
+			}) 
+		});
+
+		let newData = Object.assign({}, forumData, { post: results[0], postID: req.query.id })
+
+
+
 		//render page with post date
-		res.render("topic.ejs", forumData);
+		res.render("post.ejs", forumData);
 	});
 };

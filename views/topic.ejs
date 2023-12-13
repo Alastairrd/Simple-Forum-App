@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Welcome to <%appName%></title>
+		<title><%=appName %> : <%=topicName %></title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 	</head>
 	<body>
@@ -16,20 +16,22 @@
 			</nav>
 		</header>
 		<main>
-			<div class="main" id="top_Topics">
+			<div class="main" id="posts">
 				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1>Featured Topics</h1>
-				<% for(let i = 0; i < topics.length; i++) { %>
+				<h1>Welcome to <%=topicName%></h1>
+				<p>Most recent posts:</p>
+				<% for(let i = 0; i < posts.length; i++) { %>
 
 					<!--enclose everything in a link-->
 					<!--encodeURIComponent makes sure we can handle special characters-->
 				<a
-					href="/topic?name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
+					href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title) %>"
 				>
 				<!--list the topic name and description-->
 					<div class="f_post">
-						<h1><%= topics[i][0].topic_name %></h1>
-						<p><%= topics[i][0].topic_desc %></p>
+						<h1 class="post_title"><%= posts[i].title %></h1>
+						<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
+						<p class="content"><%= posts[i].content %></p>
 					</div>
 				</a>
 

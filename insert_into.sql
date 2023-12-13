@@ -13,3 +13,10 @@ insert into `subscriptions` (`user_id`, `topic_id`) VALUES (1, 1), (1, 2), (1, 3
 INSERT INTO `myforum`.`posts` (`post_id`, `topic_id`, `title`, `author_id`, `content`, `like_count`) VALUES ('1', '1', 'Dark Souls tips!', '1', 'If you can dodge a wrench, you can dodge a dragon!', '0');
 INSERT INTO `myforum`.`posts` (`post_id`, `topic_id`, `title`, `author_id`, `content`, `like_count`) VALUES ('2', '1', 'League vs Dota 2', '3', 'Any thoughts? I feel like league has a more approachable aesthetic and wider reach, but dota 2 has more complexity and therefore higher skillcap for the sake of Esports.', '2');
 INSERT INTO `myforum`.`posts` (`post_id`, `topic_id`, `title`, `author_id`, `content`, `like_count`) VALUES ('3', '1', 'Favourite pokemon game?', '2', 'Personally, mine would be Pokemon Crystal! What\'s yours?', '1');
+
+UPDATE `myforum`.`posts` SET `datetime` = '2023-11-19 11:07:21' WHERE (`post_id` = '1');
+UPDATE `myforum`.`posts` SET `datetime` = '2023-12-13 12:05:34' WHERE (`post_id` = '3');
+UPDATE `myforum`.`posts` SET `datetime` = '2023-12-13 12:07:33' WHERE (`post_id` = '2');
+
+INSERT INTO `myforum`.`posts` (`post_id`, `topic_id`, `title`, `author_id`, `content`, `like_count`, `datetime`) VALUES ('4', '1', 'Gamesgamesgames', '1', 'Testing', '0', '2023-12-13 12:18:01');
+

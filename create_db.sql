@@ -8,5 +8,9 @@ CREATE table posts (post_id INT NOT NULL auto_increment, topic_id INT NOT NULL, 
 CREATE table replies (reply_id int not null auto_increment, previous_id int not null, content VARCHAR(1000) not null, likes int, replied_to boolean not null default 0, primary key (reply_id));
 CREATE table subscriptions (user_id int not null, topic_id int not null);
 
+ALTER TABLE `myforum`.`posts` 
+ADD COLUMN `datetime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP AFTER `like_count`;
+
+
 CREATE USER 'forumuser'@'localhost' IDENTIFIED WITH mysql_native_password BY 'ardforum2023';
 GRANT ALL PRIVILEGES ON myForum.* TO 'forumuser'@'localhost';
