@@ -1,0 +1,60 @@
+
+/* top nav styling */
+.topnav {
+    background-color: rgb(73, 73, 73);
+    overflow: hidden;
+    border: 5px solid black;
+}
+
+.topnav a {
+    float:left;
+    text-align: center;
+    padding: 10px 10px;
+    font-size: 25px;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: whitesmoke;
+}
+
+.topnav a:hover {
+    background-color: whitesmoke;
+    color: black;
+}
+
+.topnav a.active {
+    background-color: rgba(41, 128, 41, 0.517);
+    color: whitesmoke;
+}
+
+.topnav div.account {
+    float: right;
+
+}
+
+.main {
+    background-color: lightgray;
+    border: 5px solid black;                             
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.f_post {
+    background-color: rgb(181, 179, 179);
+    border: 5px solid black;
+    padding: 5px;
+    margin: 10px;
+    border-radius: 10px;
+    
+}
+
+.f_post:hover {
+    background-color: rgb(150,150,150);
+    box-shadow: 3px 3px 10px black;
+}
+
+h1, p, a, .f_post {
+    text-decoration: none;
+    color: inherit;
+
+}
+
