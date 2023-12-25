@@ -76,7 +76,6 @@ module.exports = function (app, forumData) {
 
 		let newData = Object.assign({}, forumData, { posts: results[0], topic_id: req.query.id, topicName: req.query.name})
 
-		console.log(newData);
 
 		//create new data object, add to forum data and pass in render function
 
@@ -101,8 +100,6 @@ module.exports = function (app, forumData) {
 		});
 
 		let newData = Object.assign({}, forumData, { post: results[0], postID: req.query.id, postTitle: req.query.title })
-
-
 
 		//render page with post date
 		res.render("post.ejs", newData);
