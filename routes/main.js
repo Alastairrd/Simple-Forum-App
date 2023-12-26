@@ -104,4 +104,11 @@ module.exports = function (app, forumData) {
 		//render page with post date
 		res.render("post.ejs", newData);
 	});
+
+	app.get("/login", async function (req, res) {
+		//check if logged in?
+		//sign up or log in
+
+		res.render("login.ejs", forumData)
+	})
 };

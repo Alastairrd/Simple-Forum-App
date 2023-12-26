@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Welcome to <%appName%></title>
+		<title>Welcome to <%=appName%></title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 	</head>
 	<body>
 		<header>
 			<nav class="topnav">
-				<a class="active" href="">Home</a>
+				<a class="active" href="./">Home</a>
 				<a href="list">Topic List</a>
 				<a href="search">Search</a>
 				<div class="account">
@@ -16,24 +16,12 @@
 			</nav>
 		</header>
 		<main>
-			<div class="main" id="top_Topics">
-				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1>Featured Topics</h1>
-				<% for(let i = 0; i < topics.length; i++) { %>
-
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->
-				<a
-					href="/topic?name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
-				>
-				<!--list the topic name and description-->
-					<div class="f_post">
-						<h1><%= topics[i][0].topic_name %></h1>
-						<p><%= topics[i][0].topic_desc %></p>
-					</div>
-				</a>
-
-				<% } %>
+			<div class="main" id="login">
+				<form method="POST" action="/">
+					<p>Username: <input id="username" type="text" name="first" value="" /></p>
+					<p>Password: <input id="password" type="password" name="password" value="" /></p>
+					<input type="submit" value="Login" />
+				  </form>
 			</div>
 		</main>
 	</body>
