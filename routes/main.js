@@ -47,7 +47,7 @@ module.exports = function (app, forumData) {
 		//assign this new databse data to the forumData object being passed to page
 		let newData = Object.assign({}, forumData, { topics: topTopics });
 
-		console.log(newData)
+		console.log(newData);
 
 		//render page with new data
 		res.render("index.ejs", newData);
@@ -66,18 +66,20 @@ module.exports = function (app, forumData) {
 		//call procedure to check post_topics views for relevant posts from passed in topic name
 		const results = await new Promise((resolve, reject) => {
 			db.query(`CALL getPosts(?)`, inputTopicID, (error, results) => {
-				if(error){
-					reject(error)
+				if (error) {
+					reject(error);
 				} else {
-					resolve(results)
+					resolve(results);
 				}
-			}) 
+			});
 		});
 
-		let newData = Object.assign({}, forumData, { posts: results[0], topic_id: req.query.id, topicName: req.query.name})
-
-
 		//create new data object, add to forum data and pass in render function
+		let newData = Object.assign({}, forumData, {
+			posts: results[0],
+			topic_id: req.query.id,
+			topicName: req.query.name,
+		});
 
 		//render topic page with topic data
 		res.render("topic.ejs", newData);
@@ -88,19 +90,38 @@ module.exports = function (app, forumData) {
 		//url has to be topic/post url combo from sql query
 		let inputPostID = req.query.id;
 
-		//call procedure to check post_topics views for relevant posts from passed in topic name
+		//call procedure to check post_topics views for relevant post from passed in post id
 		const results = await new Promise((resolve, reject) => {
 			db.query(`CALL getPostData(?)`, inputPostID, (error, results) => {
-				if(error){
-					reject(error)
+				if (error) {
+					reject(error);
 				} else {
-					resolve(results)
+					resolve(results);
 				}
-			}) 
+			});
 		});
 
-		let newData = Object.assign({}, forumData, { post: results[0], postID: req.query.id, postTitle: req.query.title })
+		//selects all comments in ascending date time order
+		const comResults = await new Promise((resolve, reject) => {
+			db.query(`CALL getComments(?)`, inputPostID, (error, results) => {
+				if (error) {
+					reject(error);
+				} else {
+					resolve(results);
+				}
+			});
+		});
 
+		//this object now has post, topic name, and all comments for post
+		let newData = Object.assign({}, forumData, {
+			post: results[0],
+			comments: comResults[0],
+			postID: req.query.id,
+			postTitle: req.query.title,
+			topicName: results[0][0].topic_name,
+		});
+
+		console.log(newData.comments);
 		//render page with post date
 		res.render("post.ejs", newData);
 	});
@@ -109,6 +130,6 @@ module.exports = function (app, forumData) {
 		//check if logged in?
 		//sign up or log in
 
-		res.render("login.ejs", forumData)
-	})
+		res.render("login.ejs", forumData);
+	});
 };

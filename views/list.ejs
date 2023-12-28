@@ -16,25 +16,11 @@
 			</nav>
 		</header>
 		<main>
-			<div class="main" id="top_Topics">
-				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1>Featured Topics</h1>
-				<% for(let i = 0; i < topics.length; i++) { %>
-
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->
-				<a
-					href="/topic?name=<%= encodeURIComponent(topics[i][0].topic_name) %>"
-				>
-				<!--list the topic name and description-->
-					<div class="f_post">
-						<h1><%= topics[i][0].topic_name %></h1>
-						<p><%= topics[i][0].topic_desc %></p>
-					</div>
-				</a>
-
-				<% } %>
-			</div>
+			<main>
+				<div class="main">
+					<!--todo make list page-->
+				</div>
+			</main>
 		</main>
 	</body>
 </html>

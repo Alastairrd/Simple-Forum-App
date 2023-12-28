@@ -34,7 +34,7 @@
 .main {
     background-color: lightgray;
     border: 5px solid black;                             
-    padding: 10px;
+    padding: 5px;
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -84,6 +84,34 @@ p.content {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-style: normal;
     font-size: 14px;
+}
+
+/* main post div on a post specific page */
+div.selected-post {
+    background-color: rgb(138, 150, 136);
+    border: 5px solid black;
+    padding: 5px;
+    margin: 0px 0px 10px 0px;
+    border-radius: 10px;
+}
+
+/*comment replying to post*/
+div.base-comment {
+    background-color: rgb(195, 195, 195);
+    border: 5px solid black;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 10px;
+
+}
+
+/*comment replying to comment*/
+div.reply {
+    background-color: rgb(225, 221, 221);
+    border: 5px solid black;
+    padding: 2px;
+    margin: 2px;
+    border-radius: 10px;
 }
 
 

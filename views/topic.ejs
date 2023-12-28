@@ -17,7 +17,7 @@
 		</header>
 		<main>
 			<div class="main" id="posts">
-				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
+				<!--Creates a series of most recent posts for topic-->
 				<h1>Welcome to <%=topicName%></h1>
 				<p>Most recent posts:</p>
 				<% for(let i = 0; i < posts.length; i++) { %>
@@ -27,7 +27,8 @@
 				<a
 					href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title) %>&topic=<%=topicName %>"
 				>
-				<!--list the topic name and description-->
+				<!--list the post details-->
+				<!--todo add datetime-->
 					<div class="f_post">
 						<h1 class="post_title"><%= posts[i].title %></h1>
 						<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>

@@ -16,12 +16,37 @@
 			</nav>
 		</header>
 		<main>
-			<div class="main" id="selected_post">
-				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1 class="post_title"><%=postTitle %></h1>
-				<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(post[0].username) %>"><%= post[0].username%></a></p>
-				<p class="content"><%=post[0].content%></p>
+			<div class="main">
+				<!--main post div-->
+				<div class="selected-post">
+					<!--todo style, add datetime-->
+					<h1 class="post_title"><%=postTitle %></h1>
+					<p class="author">
+						Posted by:
+						<a
+							class="username"
+							href="user?username=<%= encodeURIComponent(post[0].username) %>"
+							><%= post[0].username%></a
+						>
+					</p>
+					<p class="content"><%=post[0].content%></p>
+				</div>
+				<!--comments section-->
+				<% for(i=0; i < comments.length; i++) { %> 
+				<% if(comments[i].previous_id == null) { %>
+				<div class="base-comment">
+					<!--todo style-->
+					<p>base comment</p>
+				</div>
+				<% }else{ %>
+				<div class="reply">
+					<!--todo style-->
+					<p>reply</p>
+				</div>
+
+				<% } } %>
 			</div>
+			
 		</main>
 	</body>
 </html>
