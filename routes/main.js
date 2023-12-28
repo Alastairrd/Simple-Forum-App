@@ -117,11 +117,11 @@ module.exports = function (app, forumData) {
 			post: results[0],
 			comments: comResults[0],
 			postID: req.query.id,
-			postTitle: req.query.title,
-			topicName: results[0][0].topic_name,
+			postTitle: results[0][0].title,
+			topicName: results[0][0].topic_name.replace(/\s/g, "-"),
 		});
 
-		console.log(newData.comments);
+		console.log(newData);
 		//render page with post date
 		res.render("post.ejs", newData);
 	});

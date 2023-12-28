@@ -25,7 +25,7 @@
 					<!--enclose everything in a link-->
 					<!--encodeURIComponent makes sure we can handle special characters-->
 				<a
-					href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title) %>&topic=<%=topicName %>"
+					href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=topicName.replace(/\s/g, "-") %>"
 				>
 				<!--list the post details-->
 				<!--todo add datetime-->
