@@ -1,26 +1,143 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Welcome to <%= appName%></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./">Home</a>
-				<a href="list">Topic List</a>
-				<a href="search">Search</a>
-				<div class="account">
-					<a href="login">Log in</a>
-				</div>
-			</nav>
-		</header>
-		<main>
-			<main>
-				<div class="main">
-					<!--todo make list page-->
-				</div>
-			</main>
-		</main>
-	</body>
+
+<head>
+  <title>Welcome to <%= appName%></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<script>
+  function toggleList(activeDiv) {
+    const divArray = [
+      "post-list-div",
+      "user-list-div",
+      "topic-list-div",
+    ];
+    console.log(activeDiv);
+
+    for (i = 0; i < divArray.length; i++) {
+      console.log(divArray[i]);
+      if (divArray[i] == activeDiv) {
+        document.getElementById(divArray[i]).style.display =
+          "inline";
+		  document.getElementById("list-heading").innerText = "List Page: " + divArray[i].charAt(0).toUpperCase() + divArray[i].substring(1, divArray[i].indexOf("-")) + "s";
+      } else {
+        document.getElementById(divArray[i]).style.display = "none";
+      }
+    }
+  }
+</script>
+
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./">Home</a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <main>
+      <div class="main">
+        <h1 id="list-heading">List Page: Select a category below to list</h1>
+        <div class="list-button-div">
+          <button class="list-button" id="posts-button" onclick="toggleList('post-list-div')">
+            Posts
+          </button>
+          <button class="list-button" id="users-button" onclick="toggleList('user-list-div')">
+            Users
+          </button>
+          <button class="list-button" id="topics-button" onclick="toggleList('topic-list-div')">
+            Topics
+          </button>
+        </div>
+
+        <div id="post-list-div" style="display: none">
+          <% for(let i = 0; i < posts.length; i++) { %>
+          <!--todo tidy up all pages html-->
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <!--list the post details-->
+          <div class="f_post">
+            <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
+							encodeURIComponent(posts[i].title.replace(/\s/g,
+							"-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,
+							"-") %>">
+              <h1 class="post_title"><%= posts[i].title %></h1>
+            </a>
+            <p class="author">
+              Posted by:
+              <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a>
+            </p>
+            <p class="post-info">
+              Topic: <a class="topic-sub-heading" href="/topic?id=<%= posts[i].topic_id
+								%>&name=<%=
+								encodeURIComponent(posts[i].topic_name.replace(/\s/g,
+								"-")) %>"><%=posts[i].topic_name%></a>
+            </p>
+            <p class="post-info">
+              Date posted: <%=posts[i].datetime%>
+            </p>
+            <p class="content"><%= posts[i].content %></p>
+          </div>
+
+          <% } %>
+        </div>
+
+        <div id="user-list-div" style="display: none">
+          <% for(let i = 0; i < users.length; i++) { %>
+
+          <!--enclose everything in a link-->
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <!--todo add user page and link to it-->
+
+          <!--list the post details-->
+          <div class="f_post">
+            <h1 class="author">
+              User:
+              <a class="username" href="user?username=<%= encodeURIComponent(users[i].username) %>"><%= posts[i].username%></a>
+            </h1>
+            <p class="content">
+              Signed up: <%= users[i].signup_date %>
+            </p>
+            <!--todo, add list of subscriptions-->
+          </div>
+
+          <% } %>
+        </div>
+
+        <div id="topic-list-div" style="display: none">
+          <% for(let i = 0; i < topics.length; i++) { %>
+
+          <!--enclose everything in a link-->
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <a href="/topic?id=<%= topics[i].topic_id %>&name=<%=
+						encodeURIComponent(topics[i].topic_name.replace(/\s/g,
+						"-")) %>">
+            <!--list the topic name and description-->
+            <div class="f_post">
+              <h1><%= topics[i].topic_name %></h1>
+              <p><%= topics[i].topic_desc %></p>
+            </div>
+          </a>
+
+          <% } %>
+        </div>
+
+        <!--todo make list page-->
+      </div>
+    </main>
+  </main>
+</body>
+
 </html>

@@ -76,7 +76,25 @@ p.author {
 /*username link */
 a.username:hover {
     text-shadow: 0px 0px 1px rgb(0, 0, 0);
-    color: blue;
+    color: rgb(50, 100, 21);
+}
+
+a.topic-sub-heading:hover {
+    text-shadow: 0px 0px 1px rgb(0, 0, 0);
+    color: rgb(50, 100, 21);
+}
+
+a.post-heading:hover {
+    text-shadow: 0px 0px 2px rgb(2, 33, 9);
+    color: rgb(50, 100, 21);
+}
+
+p.post-info {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: italic;
+    font-size: 12px;
+    padding: 0px;
+    margin: 0px;
 }
 
 /*content within post*/

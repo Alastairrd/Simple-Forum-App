@@ -8,17 +8,30 @@
 		<header>
 			<nav class="topnav">
 				<a class="active" href="./">Home</a>
-				<a href="list">Topic List</a>
+				<a href="list">Lists</a>
 				<a href="search">Search</a>
-				<div class="account">
-					<a href="login">Log in</a>
-				</div>
+				<!--if no user, show login-->
+				<% if(user == null){ %>
+					<div class="account" id="login">
+						<a href="login">Log in</a>
+					</div>
+				<!--if user exists, show logout-->
+				<% } else { %>
+					<div class="account" id="logout">
+						<a href="logout">Logout</a>
+					</div>
+				<% } %>
+				
+				
 			</nav>
 		</header>
 		<main>
 			<div class="main" id="top_Topics">
 				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
 				<h1>Featured Topics</h1>
+				<% if(user != null) { %>
+					<h2>Welcome <%=user%>!</h2>
+				<% } %>
 				<% for(let i = 0; i < topics.length; i++) { %>
 
 					<!--enclose everything in a link-->
