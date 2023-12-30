@@ -46,7 +46,10 @@ module.exports = function (app, forumData) {
 		}
 
 		//assign this new databse data to the forumData object being passed to page
-		let newData = Object.assign({}, forumData, { topics: topTopics, user: req.session.user });
+		let newData = Object.assign({}, forumData, {
+			topics: topTopics,
+			user: req.session.user,
+		});
 
 		//render page with new data
 		res.render("index.ejs", newData);
@@ -54,40 +57,53 @@ module.exports = function (app, forumData) {
 
 	//TODO design list page
 	app.get("/list", async function (req, res) {
-
 		const posts = await new Promise((resolve, reject) => {
-			db.query(`SELECT * from post_topics ORDER BY datetime DESC`, (error, results) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(results);
+			db.query(
+				`SELECT * from post_topics ORDER BY datetime DESC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
 				}
-			});
+			);
 		});
 
 		const users = await new Promise((resolve, reject) => {
-			db.query(`SELECT * from users ORDER BY signup_date DESC`, (error, results) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(results);
+			db.query(
+				`SELECT * from users ORDER BY signup_date DESC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
 				}
-			});
+			);
 		});
 
 		const topics = await new Promise((resolve, reject) => {
-			db.query(`SELECT * from TOPICS ORDER BY topic_id DESC`, (error, results) => {
-				if (error) {
-					reject(error);
-				} else {
-					resolve(results);
+			db.query(
+				`SELECT * from TOPICS ORDER BY topic_id DESC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
 				}
-			});
+			);
 		});
 
-		let newData = Object.assign({}, forumData, { topics: topics, users: users, posts: posts, user: req.session.user });
+		let newData = Object.assign({}, forumData, {
+			topics: topics,
+			users: users,
+			posts: posts,
+			user: req.session.user,
+		});
 
-		console.log(newData)
+		console.log(newData);
 
 		res.render("list.ejs", newData);
 	});
@@ -96,6 +112,31 @@ module.exports = function (app, forumData) {
 	app.get("/topic", async function (req, res) {
 		//topic name url from sql query
 		let inputTopicID = req.query.id;
+		let isUserSubscribed = false;
+
+		if (req.session.user != undefined) {
+			//sql query to get all topics user is subscribed to
+			userTopics = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT topic_id from subscriptions WHERE user_id = ? && topic_id = ?`,
+					[req.session.user_id, req.query.id],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+
+			//if user_id and topic_id match in subscriptions, return true, otherwise false
+			if (userTopics.length == 0) {
+				isUserSubscribed = false;
+			} else {
+				isUserSubscribed = true;
+			}
+		}
 
 		//call procedure to check post_topics views for relevant posts from passed in topic name
 		const results = await new Promise((resolve, reject) => {
@@ -113,9 +154,10 @@ module.exports = function (app, forumData) {
 			posts: results[0],
 			topic_id: req.query.id,
 			topicName: req.query.name,
-			user: req.session.user
+			user: req.session.user,
+			isSubscribed: isUserSubscribed,
 		});
-		//todo add session user
+
 		//render topic page with topic data
 		res.render("topic.ejs", newData);
 	});
@@ -154,9 +196,9 @@ module.exports = function (app, forumData) {
 			postID: req.query.id,
 			postTitle: results[0][0].title,
 			topicName: results[0][0].topic_name.replace(/\s/g, "-"),
-			user: req.session.user
+			user: req.session.user,
 		});
-//todo add session user
+		//todo add session user
 
 		//render page with post date
 		res.render("post.ejs", newData);
@@ -174,7 +216,7 @@ module.exports = function (app, forumData) {
 
 		let newData = Object.assign({}, forumData, {
 			loginFailed: false,
-			user: req.session.user
+			user: req.session.user,
 		});
 
 		res.render("login.ejs", newData);
@@ -190,13 +232,7 @@ module.exports = function (app, forumData) {
 		let params = [inputUser, inputPass];
 		let sqlquery = `CALL validateUser(?,?)`;
 
-		// const results = db.query(sqlquery, params, (err, result) => {
-		// 	if (err) {
-		// 		console.log(err);
-		// 	}
-		// 	return result;
-		// });
-
+		//check if username and password match a user
 		const results = await new Promise((resolve, reject) => {
 			db.query(sqlquery, params, (error, results) => {
 				if (error) {
@@ -207,12 +243,12 @@ module.exports = function (app, forumData) {
 			});
 		});
 
+		//if no user found for that combo
 		if (results[0].length == 0) {
-			console.log("no user found");
-
+			//redirect back to login page, display error message saying there is no matching user
 			let newData = Object.assign({}, forumData, {
 				loginFailed: true,
-				user: req.session.user
+				user: req.session.user,
 			});
 			//todo add session user
 			res.render("login.ejs", newData);
@@ -224,6 +260,7 @@ module.exports = function (app, forumData) {
 
 				// store user information in session, typically a user id
 				req.session.user = req.body.user;
+				req.session.user_id = results[0][0].user_id;
 
 				// save the session before redirection to ensure page
 				// load does not happen before session is saved

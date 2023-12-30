@@ -1,51 +1,69 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><%=appName %> : <%=topicName %></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./">Home</a>
-				<a href="list">Lists</a>
-				<a href="search">Search</a>
-				<!--if no user, show login-->
-				<% if(user == null){ %>
-					<div class="account" id="login">
-						<a href="login">Log in</a>
-					</div>
-				<!--if user exists, show logout-->
-				<% } else { %>
-					<div class="account" id="logout">
-						<a href="logout">Logout</a>
-					</div>
-				<% } %>
-			</nav>
-		</header>
-		<main>
-			<div class="main" id="posts">
-				<!--Creates a series of most recent posts for topic-->
-				<h1>Welcome to <%=topicName%></h1>
-				<p>Most recent posts:</p>
-				<% for(let i = 0; i < posts.length; i++) { %>
 
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->
-				<a
-					href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=topicName.replace(/\s/g, "-") %>"
-				>
-				<!--list the post details-->
-				<!--todo add datetime-->
-					<div class="f_post">
-						<h1 class="post_title"><%= posts[i].title %></h1>
-						<p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
-						<p class="content"><%= posts[i].content %></p>
-					</div>
-				</a>
+<head>
+  <title><%=appName %> : <%=topicName %></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
 
-				<% } %>
-			</div>
-		</main>
-	</body>
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./">Home</a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+
+    <div class="main" id="posts">
+      <!--Creates a series of most recent posts for topic-->
+      <h1>Welcome to <%=topicName%></h1>
+      <!--if user is not subscribed to topic, show sub button-->
+      <% if(user == null) { %>
+      	<p>You are not logged in. Log in to subscribe and post. </p>
+      <% } else if (user != null && isSubscribed) { %>
+      	<p>Welcome back, <%=user%>! You are subscribed to <%=topicName%>.</p>
+      <% } else if (user != null && !isSubscribed) { %>
+      	<p>Hi there, <%=user%>, you are not subscribed to <%=topicName%>.</p>
+
+      <!--button-->
+      <% } %>
+      <p>Most recent posts:</p>
+      <% for(let i = 0; i < posts.length; i++) { %>
+
+      <!--enclose everything in a link-->
+      <!--encodeURIComponent makes sure we can handle special characters-->
+      <a href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=topicName.replace(/\s/g, "-") %>">
+        <!--list the post details-->
+        <!--todo add datetime-->
+        <div class="f_post">
+          <h1 class="post_title"><%= posts[i].title %></h1>
+          <p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
+          <p class="content"><%= posts[i].content %></p>
+        </div>
+      </a>
+
+      <% } %>
+    </div>
+
+    <!--todo make add post to topic-->
+    <!--if user is subscribed to topic, show post div-->
+    <div>
+
+    </div>
+  </main>
+</body>
+
 </html>
