@@ -48,7 +48,7 @@ app.set("view engine", "ejs");
 app.engine("html", ejs.renderFile);
 
 let forumData = {
-	appName: "Simple Forum app"
+	appName: "Happy lil' Forum"
 }
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  All the routes will go in this file
 require("./routes/main")(app, forumData);

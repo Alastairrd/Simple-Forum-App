@@ -83,12 +83,81 @@ module.exports = function (app, forumData) {
 			);
 		});
 
-		console.log(users);
-
 		//return all topics
 		const topics = await new Promise((resolve, reject) => {
 			db.query(
 				`SELECT * from TOPICS ORDER BY topic_id ASC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		console.log(users)
+		console.log(posts)
+
+		//changing the post dates to format better
+		for (i = 0; i < posts.length; i++) {
+			d = new Date();
+			d = posts[i].datetime;
+			posts[i].datetime = d.toLocaleString();
+		}
+
+		//changing the user dates to format better
+		for (i = 0; i < users.length; i++) {
+			d = new Date();
+			d = users[i].signup_date;
+			users[i].signup_date = d.toLocaleDateString();
+		}
+
+		//make object with all list data
+		let newData = Object.assign({}, forumData, {
+			topics: topics,
+			users: users,
+			posts: posts,
+			user: req.session.user,
+		});
+
+		res.render("list.ejs", newData);
+	});
+
+	//return all posts
+	app.get("/about", async function (req, res) {
+		const posts = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT username, topic_name, title from post_topics ORDER BY datetime DESC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		//return all users
+		const users = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT username from users ORDER BY username ASC`,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		//return all topics
+		const topics = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT topic_name from TOPICS ORDER BY topic_id ASC`,
 				(error, results) => {
 					if (error) {
 						reject(error);
@@ -107,7 +176,77 @@ module.exports = function (app, forumData) {
 			user: req.session.user,
 		});
 
-		res.render("list.ejs", newData);
+		console.log(newData);
+		res.render("about.ejs", newData);
+	});
+
+	app.get("/user", async function (req, res) {
+		//user page information
+		let username = req.query.username;
+
+		// sql to get user info
+		userResults = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT * FROM users WHERE username = ?`,
+				username,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		//signup date formatting
+		d = new Date();
+		d = userResults[0].signup_date;
+		userResults[0].signup_date = d.toLocaleDateString();
+
+
+		//sql to get subscribed topics
+		userTopics = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT subscriptions.topic_id, topics.topic_name FROM subscriptions JOIN topics ON subscriptions.topic_id = topics.topic_id WHERE subscriptions.user_id = ?`,
+				userResults[0].user_id,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		//sql to get user posts
+		userPosts = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT * from post_topics WHERE author_id = ?`,
+				userResults[0].user_id,
+				(error, results) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(results);
+					}
+				}
+			);
+		});
+
+		//create new data object, add to forum data and pass in render function
+		let newData = Object.assign({}, forumData, {
+			userData: userResults[0],
+			topics: userTopics,
+			posts: userPosts,
+			user: req.session.user,
+			user_id: req.session.user_id,
+		});
+
+		console.log(newData);
+
+		res.render("user.ejs", newData);
 	});
 
 	//TODO design topic page template

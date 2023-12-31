@@ -7,10 +7,10 @@
 	<body>
 		<header>
 			<nav class="topnav">
-				<a class="active" href="./">Home</a>
+				<a class="active" href="./"><%=appName%></a>
 				<a href="list">Lists</a>
 				<a href="search">Search</a>
-				
+				<a href="about">About</a>
 				<!--if no user, show login-->
 				<% if(user == null){ %>
 					<div class="account" id="login">

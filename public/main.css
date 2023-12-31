@@ -32,6 +32,7 @@
 }
 
 .main {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: lightgray;
     border: 5px solid black;                             
     padding: 5px;
@@ -132,6 +133,12 @@ div.reply {
     border-radius: 10px;
 }
 
+/* about page stat block div */
+div.stat-block {
+    border: 1px solid black;
+    padding: 5px;
+}
+
 p.quote {
     background-color: grey;
     border: 2px solid darkgray;
@@ -149,6 +156,13 @@ p.quote {
     margin: 25px;
     padding: 10px 5px 10px 5px;
     border-radius: 10px;
+}
+
+p.stat-heading {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 20px;
 }
 
 
