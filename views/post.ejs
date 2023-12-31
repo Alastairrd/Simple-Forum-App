@@ -25,11 +25,14 @@
 			</nav>
 		</header>
 		<main>
+			<!--main post div-->
 			<div class="main">
-				<!--main post div-->
+				<!--div for the main post in question-->
 				<div class="selected-post">
-					<!--todo style, add datetime-->
+					<!--main post details and content-->
 					<h1 class="post_title"><%=postTitle %></h1>
+
+					<!--author of post with link-->
 					<p class="author">
 						Posted by:
 						<a
@@ -38,16 +41,21 @@
 							><%= post[0].username%></a
 						>
 					</p>
+					<!--date of post-->
 					<p class="post-info">
 						Date posted: <%=post[0].datetime%>
 					  </p>
+					<!--content of post-->
 					<p class="content"><%=post[0].content%></p>
 				</div>
+
 				<!--comments section-->
 				<% for(i=0; i < comments.length; i++) { %> 
+					<!--if the comment is replying to the post, not another comment-->
 				<% if(comments[i].previous_id == null) { %>
 				<div class="base-comment">
-					<!--todo style-->
+
+					<!--author of comment with link-->
 					<p class="author">
 						Posted by:
 						<a
@@ -56,13 +64,19 @@
 							><%= comments[i].username%></a
 						>
 					</p>
+
+					<!--date comment posted-->
 					<p class="post-info">
 						Date posted: <%=comments[i].datetime%>
 					  </p>
+
+					  <!--comment content-->
 					<p class="content"><%=comments[i].content%></p>
 				</div>
 				<% }else{ %>
 				<div class="reply">
+
+					<!--author of comment with link-->
 					<p class="author">
 						Posted by:
 						<a
@@ -75,8 +89,11 @@
 						Date posted: <%=comments[i].datetime%>
 					  </p>
 					</br>
+
+					<!--date comment posted-->
 					  <p class="quote">Replying to <%=comments[comments[i].previous_id].username%>: "<%=comments[comments[i].previous_id].content%>"</p>
 					
+					  <!--comment content-->
 					<p class="content"><%=comments[i].content%></p>
 				</div>
 
