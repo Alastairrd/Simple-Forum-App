@@ -48,12 +48,36 @@
 				<% if(comments[i].previous_id == null) { %>
 				<div class="base-comment">
 					<!--todo style-->
-					<p>base comment</p>
+					<p class="author">
+						Posted by:
+						<a
+							class="username"
+							href="user?username=<%= encodeURIComponent(comments[i].username) %>"
+							><%= comments[i].username%></a
+						>
+					</p>
+					<p class="post-info">
+						Date posted: <%=comments[i].datetime%>
+					  </p>
+					<p class="content"><%=comments[i].content%></p>
 				</div>
 				<% }else{ %>
 				<div class="reply">
-					<!--todo style-->
-					<p>reply</p>
+					<p class="author">
+						Posted by:
+						<a
+							class="username"
+							href="user?username=<%= encodeURIComponent(comments[i].username) %>"
+							><%= comments[i].username%></a
+						>
+					</p>
+					<p class="post-info">
+						Date posted: <%=comments[i].datetime%>
+					  </p>
+					</br>
+					  <p class="quote">Replying to <%=comments[comments[i].previous_id].username%>: "<%=comments[comments[i].previous_id].content%>"</p>
+					
+					<p class="content"><%=comments[i].content%></p>
 				</div>
 
 				<% } } %>

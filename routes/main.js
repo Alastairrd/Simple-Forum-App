@@ -206,6 +206,13 @@ module.exports = function (app, forumData) {
 		d = results[0][0].datetime;
 		results[0][0].datetime = d.toLocaleString();
 
+		//changing the comment dates to format better
+		for (i = 0; i < comResults[0].length; i++) {
+			d = new Date();
+			d = comResults[0][i].datetime;
+			comResults[0][i].datetime = d.toLocaleString();
+		}
+
 		//this object now has post, topic name, and all comments for post
 		let newData = Object.assign({}, forumData, {
 			post: results[0],
