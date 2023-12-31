@@ -39,7 +39,35 @@
       	<p>Hi there, <%=user%>, you are not subscribed to <%=topicName%>.</p>
 
       <!--button-->
+	<form method="POST" action="/subscribe">
+		<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
+		<input id="topic_id" type="hidden" name="topic_id" value="<%=topic_id%>"/>
+		<input id="url" type="hidden" name="url" value="<%=url%>"/>
+		<input type="submit" value="Subscribe" />
+	</form>
       <% } %>
+
+	  <!--todo make add post to topic-->
+    <!--if user is subscribed to topic, show post div-->
+	<div id="add-post-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
+		<p>Add a new post:</p>
+		<form method="POST" action="/addPost">
+			<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
+			<input id="topic_id" type="hidden" name="topic_id" value="<%=topic_id%>"/>
+			<input id="url" type="hidden" name="url" value="<%=url%>"/>
+
+			<label for="new_Post_Name">Post title:</label>
+			<input id="new-post-title" type="text" name="title" value="" maxlength="360"/> </br>
+
+			<label for="new_Post_Content">Content:</label>
+			<input id="new-post-content" type="text" name="content" value="" maxlength="10000"/>
+			<input type="submit" value="Post" />
+		</form>
+	</div>
+	
+
+    <div>
+
       <p>Most recent posts:</p>
       <% for(let i = 0; i < posts.length; i++) { %>
 
@@ -51,6 +79,9 @@
         <div class="f_post">
           <h1 class="post_title"><%= posts[i].title %></h1>
           <p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
+		  <p class="post-info">
+			Date posted: <%=posts[i].datetime%>
+		  </p>
           <p class="content"><%= posts[i].content %></p>
         </div>
       </a>
@@ -58,11 +89,8 @@
       <% } %>
     </div>
 
-    <!--todo make add post to topic-->
-    <!--if user is subscribed to topic, show post div-->
-    <div>
-
-    </div>
+	</div>
+    
   </main>
 </body>
 
