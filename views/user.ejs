@@ -50,14 +50,15 @@
         <% } %>
       </ul>
 
-      <!--list of posts-->
+      
       <!--post stat section-->
       <p class="stat-heading">Posts: <%=posts.length%></p>
+
+	  <!--list of posts-->
       <ul>
         <% for(let i = 0; i < posts.length; i++) { %>
         <!--encodeURIComponent makes sure we can handle special characters-->
-        <!--list the post details-->
-
+        <!--list the post as a link-->
         <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
 										  encodeURIComponent(posts[i].title.replace(/\s/g,
 										  "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,
@@ -66,9 +67,6 @@
         </a>
         <% } %>
       </ul>
-
-
-
     </div>
   </main>
 </body>

@@ -344,6 +344,20 @@ module.exports = function (app, forumData) {
 			);
 		});
 
+		const subCount = await new Promise((resolve, reject) => {
+			db.query(
+				`SELECT COUNT(topic_id) as count FROM subscriptions WHERE topic_id = ?`,
+				inputTopicID,
+				(error, result) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(result[0]);
+					}
+				}
+			);
+		});
+
 		//create new data object, add to forum data and pass in render function
 		let newData = Object.assign({}, forumData, {
 			posts: results[0],
@@ -352,6 +366,7 @@ module.exports = function (app, forumData) {
 			user_id: req.session.user_id,
 			isSubscribed: isUserSubscribed,
 			url: req.originalUrl,
+			subs: subCount.count
 		});
 
 		//render topic page with topic data

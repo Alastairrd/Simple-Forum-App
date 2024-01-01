@@ -28,15 +28,18 @@
   </header>
   <main>
     <div class="main">
-      <!--todo make about page-->
+      <!--about page title-->
       <h1>About the Happy lil' forum.</h1>
-      <p>Here at the happy lil' forum, we are focused on being lil' and happy, and talking about specifically 3 things, cooking, exercise and gaming.
-        Why don't we have more topics you ask? Because these 3 core pillars of society. </br>
-        A wise man once said, "Git gud, or make a mean lasagna, and if you can't do that - at least go for a run.
+
+	  <!--about page desc-->
+      <p>Here at the happy lil' forum, we are focused on being lil' and happy, and talking about things like, cooking, exercise and gaming.
+        Not too any though, you get to work on talking about these and we'll make some more once you're done.</br>
+        A wise man once said, "Git gud, make a mean lasagna, pr even go for a run.
         Also, if you happen to be a university coursework marker, you're just a great person in general."
       </p>
       <h2>Forum stats:</h2>
 
+	  <!--about stats-->
       <div class="stat-block">
         <!--User section-->
         <p class="stat-heading">Users: <%=users.length%></p>
@@ -45,6 +48,7 @@
 
           <!--enclose everything in a link-->
           <!--encodeURIComponent makes sure we can handle special characters-->
+		  <!--username-->
           <p>
             <a class="username" href="user?username=<%= encodeURIComponent(users[i].username) %>"><%= users[i].username%></a>
           </p>
@@ -58,11 +62,13 @@
         <div id="topic-list-div">
           <% for(let i = 0; i < topics.length; i++) { %>
 
+		  <!--enclosed in a link-->
           <!--encodeURIComponent makes sure we can handle special characters-->
           <a class="post-heading" href="/topic?id=<%= topics[i].topic_id %>&name=<%=
 									  encodeURIComponent(topics[i].topic_name.replace(/\s/g,
 									  "-")) %>">
-            <!--list the topic name and description-->
+
+            <!--list the topic name-->
             <p><%= topics[i].topic_name %></p>
           </a>
           <% } %>
@@ -75,8 +81,8 @@
         <div id="post-list-div">
           <% for(let i = 0; i < posts.length; i++) { %>
           <!--encodeURIComponent makes sure we can handle special characters-->
-          <!--list the post details-->
 
+          <!--list the post details in a link-->
           <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
 										  encodeURIComponent(posts[i].title.replace(/\s/g,
 										  "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,

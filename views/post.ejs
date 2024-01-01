@@ -54,10 +54,13 @@
     </nav>
   </header>
   <main>
+	
     <!--main post div-->
     <div class="main">
+
       <!--div for the main post in question-->
       <div class="selected-post">
+
         <!--main post details and content-->
         <h1 class="post_title"><%=postTitle %></h1>
 
@@ -66,13 +69,16 @@
           Posted by:
           <a class="username" href="user?username=<%= encodeURIComponent(post[0].username) %>"><%= post[0].username%></a>
         </p>
+
         <!--date of post-->
         <p class="post-info">
           Date posted: <%=post[0].datetime%>
         </p>
+
         <!--content of post-->
         <p class="content"><%=post[0].content%></p>
 
+		<!--input form for leaving a comment-->
         <div id="add-comment-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
           <p>Add a new comment:</p>
           <form method="POST" action="/addComment">
@@ -87,6 +93,7 @@
             <input type="submit" value="Post Comment" />
           </form>
         </div>
+		<!--logic to display message about leaving comments depending on login and membership of post-->
         <% if(user == null) { %>
         <p>You are not logged in. Log in to subscribe and add comments to posts. </p>
         <% } else if (user != null && !isSubscribed) { %>
@@ -116,10 +123,17 @@
 
         <!--comment content-->
         <p class="content"><%=comments[i].content%></p>
+
+		<!--reply button, passes in data needed for db input-->
+		<!--calls function to show comment form if user is logged in and member of topic-->
         <button id="<%=i%>" class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
+
+		<!--dynamically number div for inserting reply form html-->
         <div id="reply_<%=i%>"></div>
       </div>
       <% }else{ %>
+
+	  <!--this comment is a reply to another comment-->
       <div class="reply">
 
         <!--author of comment with link-->
@@ -127,6 +141,7 @@
           Posted by:
           <a class="username" href="user?username=<%= encodeURIComponent(comments[i].username) %>"><%= comments[i].username%></a>
         </p>
+
         <!--date comment posted-->
         <p class="post-info">
           Date posted: <%=comments[i].datetime%>
@@ -134,13 +149,17 @@
         </br>
 
         <!--quote of original post-->
-
         <p class="quote">Replying to <%=comments[i].quote_Username%>: "<%=comments[i].quote_Content%>"</p>
 
         <!--comment content-->
         <p class="content"><%=comments[i].content%></p>
+
+		<!--reply button, passes in data needed for db input-->
+		<!--calls function to show comment form if user is logged in and member of topic-->
         <button id="<%=i%>" class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
-        <div id="reply_<%=i%>"></div>
+        
+		<!--dynamically number div for inserting reply form html-->
+		<div id="reply_<%=i%>"></div>
       </div>
       <% } } %>
     </div>

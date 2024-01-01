@@ -6,6 +6,7 @@
   <link rel="stylesheet" type="text/css" href="/main.css" />
 </head>
 
+<!--this script toggles the display of each type of list-->
 <script>
   function toggleList(activeDiv) {
     const divArray = [
@@ -14,6 +15,7 @@
       "topic-list-div",
     ];
 
+	//sets the selected div to display and all others to no display
     for (i = 0; i < divArray.length; i++) {
       console.log(divArray[i]);
       if (divArray[i] == activeDiv) {
@@ -50,7 +52,11 @@
   <main>
     <main>
       <div class="main">
+
+		<!--list page heading-->
         <h1 id="list-heading">List Page: Select a category below to list</h1>
+
+		<!--buttons to select what type of list to display-->
         <div class="list-button-div">
           <button class="list-button" id="posts-button" onclick="toggleList('post-list-div')">
             Posts
@@ -63,59 +69,69 @@
           </button>
         </div>
 
+		<!--list of posts-->
         <div id="post-list-div" style="display: none">
           <% for(let i = 0; i < posts.length; i++) { %>
-          <!--todo tidy up all pages html-->
+		  
+		  <!--enclose post in a link-->
           <!--encodeURIComponent makes sure we can handle special characters-->
-          <!--list the post details-->
           <div class="f_post">
+
+			<!--post title-->
             <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
                 encodeURIComponent(posts[i].title.replace(/\s/g,
                 "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,
                 "-") %>">
               <h1 class="post_title"><%= posts[i].title %></h1>
             </a>
+
+			<!--post author-->
             <p class="author">
               Posted by:
               <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a>
             </p>
+
+			<!--topic the post was posted in-->
             <p class="post-info">
               Topic: <a class="topic-sub-heading" href="/topic?id=<%= posts[i].topic_id
                   %>&name=<%=
                   encodeURIComponent(posts[i].topic_name.replace(/\s/g,
                   "-")) %>"><%=posts[i].topic_name%></a>
             </p>
+
+			<!--date post was made-->
             <p class="post-info">
               Date posted: <%=posts[i].datetime%>
             </p>
+
+			<!--post content-->
             <p class="content"><%= posts[i].content %></p>
           </div>
 
           <% } %>
         </div>
 
+		<!--list of users-->
         <div id="user-list-div" style="display: none">
           <% for(let i = 0; i < users.length; i++) { %>
 
-          <!--enclose everything in a link-->
-          <!--encodeURIComponent makes sure we can handle special characters-->
-          <!--todo add user page and link to it-->
-
-          <!--list the post details-->
+          <!--list the user details-->
           <div class="f_post">
             <h1 class="author">
               User:
               <a class="username" href="user?username=<%= encodeURIComponent(users[i].username) %>"><%= users[i].username%></a>
             </h1>
+
+			<!--user signup date-->
             <p class="content">
               Signed up: <%= users[i].signup_date %>
             </p>
-            <!--todo, add list of subscriptions-->
           </div>
 
           <% } %>
         </div>
 
+		<!--list of topics-->
         <div id="topic-list-div" style="display: none">
           <% for(let i = 0; i < topics.length; i++) { %>
 
@@ -124,6 +140,7 @@
           <a href="/topic?id=<%= topics[i].topic_id %>&name=<%=
 						encodeURIComponent(topics[i].topic_name.replace(/\s/g,
 						"-")) %>">
+						
             <!--list the topic name and description-->
             <div class="f_post">
               <h1><%= topics[i].topic_name %></h1>
@@ -133,8 +150,6 @@
 
           <% } %>
         </div>
-
-        <!--todo make list page-->
       </div>
     </main>
   </main>
