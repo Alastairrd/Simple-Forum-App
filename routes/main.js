@@ -364,8 +364,6 @@ module.exports = function (app, forumData) {
 		let inputPostID = req.query.id;
 		let isUserSubscribed = false;
 
-
-
 		if (req.session.user != undefined) {
 			//sql query to get all topics user is subscribed to
 			topicID = await new Promise((resolve, reject) => {
@@ -437,20 +435,24 @@ module.exports = function (app, forumData) {
 			d = comResults[0][i].datetime;
 			comResults[0][i].datetime = d.toLocaleString();
 
-			if(comResults[0][i].previous_id != null){
-				for(j=0; j < comResults.length; j++){
-					if(comResults[0][j].reply_id == comResults[0][i].previous_id){
-						console.log("match found")
-						comResults[0][i].quote_Username = comResults[0][j].username
-						comResults[0][i].quote_Content = comResults[0][j].content
+			if (comResults[0][i].previous_id != null) {
+				for (j = 0; j < comResults.length; j++) {
+					if (
+						comResults[0][j].reply_id ==
+						comResults[0][i].previous_id
+					) {
+						console.log("match found");
+						comResults[0][i].quote_Username =
+							comResults[0][j].username;
+						comResults[0][i].quote_Content =
+							comResults[0][j].content;
 					}
 				}
 			}
 		}
 
-		console.log(comResults)
+		console.log(comResults);
 
-		
 		//this object now has post, topic name, and all comments for post
 		let newData = Object.assign({}, forumData, {
 			post: results[0],
@@ -464,7 +466,7 @@ module.exports = function (app, forumData) {
 			url: req.originalUrl,
 		});
 
-		console.log(newData)
+		console.log(newData);
 
 		//render page with post date
 		res.render("post.ejs", newData);
@@ -694,7 +696,7 @@ module.exports = function (app, forumData) {
 			}
 		}
 
-		console.log(req.body.previous_id)
+		console.log(req.body.previous_id);
 
 		//check user is subscribed again, just in case
 		if (isUserSubscribed == true && req.body.previous_id != "") {
@@ -702,7 +704,7 @@ module.exports = function (app, forumData) {
 			await new Promise((resolve, reject) => {
 				db.query(
 					`INSERT INTO replies (previous_id, content, post_id, user_id) VALUES (?, ?, ?, ?)`,
-					[	
+					[
 						req.body.previous_id,
 						req.body.content,
 						req.body.post_id,
@@ -717,16 +719,12 @@ module.exports = function (app, forumData) {
 					}
 				);
 			});
-		} else if(isUserSubscribed == true && req.body.previous_id == ""){
+		} else if (isUserSubscribed == true && req.body.previous_id == "") {
 			//insert reply into db
 			await new Promise((resolve, reject) => {
 				db.query(
 					`INSERT INTO replies (content, post_id, user_id) VALUES (?, ?, ?)`,
-					[	
-						req.body.content,
-						req.body.post_id,
-						req.body.user_id,
-					],
+					[req.body.content, req.body.post_id, req.body.user_id],
 					(error, results) => {
 						if (error) {
 							reject(error);
@@ -740,5 +738,5 @@ module.exports = function (app, forumData) {
 
 		//redirect back to original url
 		res.redirect(req.protocol + "://" + req.get("host") + req.body.url);
-	})
+	});
 };

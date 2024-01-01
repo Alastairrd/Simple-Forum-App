@@ -19,7 +19,7 @@
       if (divArray[i] == activeDiv) {
         document.getElementById(divArray[i]).style.display =
           "inline";
-		  document.getElementById("list-heading").innerText = "List Page: " + divArray[i].charAt(0).toUpperCase() + divArray[i].substring(1, divArray[i].indexOf("-")) + "s";
+        document.getElementById("list-heading").innerText = "List Page: " + divArray[i].charAt(0).toUpperCase() + divArray[i].substring(1, divArray[i].indexOf("-")) + "s";
       } else {
         document.getElementById(divArray[i]).style.display = "none";
       }
@@ -65,33 +65,33 @@
 
         <div id="post-list-div" style="display: none">
           <% for(let i = 0; i < posts.length; i++) { %>
-            <!--todo tidy up all pages html-->
-            <!--encodeURIComponent makes sure we can handle special characters-->
-            <!--list the post details-->
-            <div class="f_post">
-              <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
+          <!--todo tidy up all pages html-->
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <!--list the post details-->
+          <div class="f_post">
+            <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
                 encodeURIComponent(posts[i].title.replace(/\s/g,
                 "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,
                 "-") %>">
-                <h1 class="post_title"><%= posts[i].title %></h1>
-              </a>
-              <p class="author">
-                Posted by:
-                <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a>
-              </p>
-              <p class="post-info">
-                Topic: <a class="topic-sub-heading" href="/topic?id=<%= posts[i].topic_id
+              <h1 class="post_title"><%= posts[i].title %></h1>
+            </a>
+            <p class="author">
+              Posted by:
+              <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a>
+            </p>
+            <p class="post-info">
+              Topic: <a class="topic-sub-heading" href="/topic?id=<%= posts[i].topic_id
                   %>&name=<%=
                   encodeURIComponent(posts[i].topic_name.replace(/\s/g,
                   "-")) %>"><%=posts[i].topic_name%></a>
-              </p>
-              <p class="post-info">
-                Date posted: <%=posts[i].datetime%>
-              </p>
-              <p class="content"><%= posts[i].content %></p>
-            </div>
-  
-            <% } %>
+            </p>
+            <p class="post-info">
+              Date posted: <%=posts[i].datetime%>
+            </p>
+            <p class="content"><%= posts[i].content %></p>
+          </div>
+
+          <% } %>
         </div>
 
         <div id="user-list-div" style="display: none">

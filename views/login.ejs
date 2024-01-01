@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Welcome to <%=appName%></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./"><%=appName%></a>
-				<a href="list">Lists</a>
-				<a href="search">Search</a>
-				<a href="about">About</a>
-				<!--if no user, show login-->
-				<% if(user == null){ %>
-					<div class="account" id="login">
-						<a href="login">Log in</a>
-					</div>
-				<!--if user exists, show logout-->
-				<% } else { %>
-					<div class="account" id="logout">
-						<a href="logout">Logout</a>
-					</div>
-				<% } %>
-			</nav>
-		</header>
-		<main>
-			<!--todo more styling-->
-			<div class="main" id="login">
-				<% if(loginFailed == true) { %>
-					<p>No account matching that username and password, please try again.</p>
-				<% } %>
-				<form method="POST" action="/login">
-					<p>Username: <input id="user" type="text" name="user" value="" maxlength="20"/></p>
-					<p>Password: <input id="pass" type="password" name="pass" value="" maxlength="64" /></p>
-					<input type="submit" value="Login" />
-				</form>
-			</div>
-		</main>
-	</body>
+
+<head>
+  <title>Welcome to <%=appName%></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./"><%=appName%></a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <a href="about">About</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <!--todo more styling-->
+    <div class="main" id="login">
+      <% if(loginFailed == true) { %>
+      <p>No account matching that username and password, please try again.</p>
+      <% } %>
+      <form method="POST" action="/login">
+        <p>Username: <input id="user" type="text" name="user" value="" maxlength="20" /></p>
+        <p>Password: <input id="pass" type="password" name="pass" value="" maxlength="64" /></p>
+        <input type="submit" value="Login" />
+      </form>
+    </div>
+  </main>
+</body>
+
 </html>

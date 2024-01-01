@@ -1,92 +1,95 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Welcome to <%=appName%></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./"><%=appName%></a>
-				<a href="list">Lists</a>
-				<a href="search">Search</a>
-				<a href="about">About</a>
-				<!--if no user, show login-->
-				<% if(user == null){ %>
-					<div class="account" id="login">
-						<a href="login">Log in</a>
-					</div>
-				<!--if user exists, show logout-->
-				<% } else { %>
-					<div class="account" id="logout">
-						<a href="logout">Logout</a>
-					</div>
-				<% } %>
-			</nav>
-		</header>
-		<main>
-			<div class="main">
-				<!--todo make about page-->
-				<h1>About the Happy lil' forum.</h1>
-				<p>Here at the happy lil' forum, we are focused on being lil' and happy, and talking about specifically 3 things, cooking, exercise and gaming.
-					Why don't we have more topics you ask? Because these 3 core pillars of society. </br>
-					A wise man once said, "Git gud, or make a mean lasagna, and if you can't do that - at least go for a run.
-					Also, if you happen to be a university coursework marker, you're just a great person in general."
-				</p>
-				<h2>Forum stats:</h2>
 
-				<div class="stat-block">
-					<!--User section-->
-				<p class="stat-heading">Users: <%=users.length%></p>
-				<div id="user-list-div">
-					<% for(let i = 0; i < users.length; i++) { %>
-		  
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->					
-					  <p>
-						<a class="username" href="user?username=<%= encodeURIComponent(users[i].username) %>"><%= users[i].username%></a>
-					  </p>
-		  
-					<% } %>
-					<p>______________________________</p>
-				</div>
+<head>
+  <title>Welcome to <%=appName%></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
 
-				<!--topic stat section-->
-				<p class="stat-heading">Topics: <%=topics.length%></p>
-				<div id="topic-list-div">
-					<% for(let i = 0; i < topics.length; i++) { %>
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./"><%=appName%></a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <a href="about">About</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <div class="main">
+      <!--todo make about page-->
+      <h1>About the Happy lil' forum.</h1>
+      <p>Here at the happy lil' forum, we are focused on being lil' and happy, and talking about specifically 3 things, cooking, exercise and gaming.
+        Why don't we have more topics you ask? Because these 3 core pillars of society. </br>
+        A wise man once said, "Git gud, or make a mean lasagna, and if you can't do that - at least go for a run.
+        Also, if you happen to be a university coursework marker, you're just a great person in general."
+      </p>
+      <h2>Forum stats:</h2>
 
-						<!--encodeURIComponent makes sure we can handle special characters-->
-						<a class="post-heading" href="/topic?id=<%= topics[i].topic_id %>&name=<%=
+      <div class="stat-block">
+        <!--User section-->
+        <p class="stat-heading">Users: <%=users.length%></p>
+        <div id="user-list-div">
+          <% for(let i = 0; i < users.length; i++) { %>
+
+          <!--enclose everything in a link-->
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <p>
+            <a class="username" href="user?username=<%= encodeURIComponent(users[i].username) %>"><%= users[i].username%></a>
+          </p>
+
+          <% } %>
+          <p>______________________________</p>
+        </div>
+
+        <!--topic stat section-->
+        <p class="stat-heading">Topics: <%=topics.length%></p>
+        <div id="topic-list-div">
+          <% for(let i = 0; i < topics.length; i++) { %>
+
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <a class="post-heading" href="/topic?id=<%= topics[i].topic_id %>&name=<%=
 									  encodeURIComponent(topics[i].topic_name.replace(/\s/g,
 									  "-")) %>">
-						  <!--list the topic name and description-->
-							<p><%= topics[i].topic_name %></p>
-						</a>
-						<% } %>
-						<p>______________________________</p>
-				</div>
+            <!--list the topic name and description-->
+            <p><%= topics[i].topic_name %></p>
+          </a>
+          <% } %>
+          <p>______________________________</p>
+        </div>
 
 
-				<!--post stat section-->
-				<p class="stat-heading">Posts: <%=posts.length%></p>
-				<div id="post-list-div">
-					<% for(let i = 0; i < posts.length; i++) { %>
-						<!--encodeURIComponent makes sure we can handle special characters-->
-						<!--list the post details-->
-						
-						  <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
+        <!--post stat section-->
+        <p class="stat-heading">Posts: <%=posts.length%></p>
+        <div id="post-list-div">
+          <% for(let i = 0; i < posts.length; i++) { %>
+          <!--encodeURIComponent makes sure we can handle special characters-->
+          <!--list the post details-->
+
+          <a class="post-heading" href="/post?id=<%=posts[i].post_id %>&title=<%=
 										  encodeURIComponent(posts[i].title.replace(/\s/g,
 										  "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g,
 										  "-") %>">
-							<p class="post_title"><%= posts[i].title %> - Posted in: <%=posts[i].topic_name%></p>
-						  </a>
-			  
-					<% } %>
-					<p>______________________________</p>
-				</div>
-				</div>
-			</div>
-		</main>
-	</body>
+            <p class="post_title"><%= posts[i].title %> - Posted in: <%=posts[i].topic_name%></p>
+          </a>
+
+          <% } %>
+          <p>______________________________</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>

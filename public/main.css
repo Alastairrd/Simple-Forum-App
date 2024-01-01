@@ -1,182 +1,186 @@
-
 /* top nav styling */
 .topnav {
-    background-color: rgb(73, 73, 73);
-    overflow: hidden;
-    border: 5px solid black;
+	background-color: rgb(73, 73, 73);
+	overflow: hidden;
+	border: 5px solid black;
 }
 
 .topnav a {
-    float:left;
-    text-align: center;
-    padding: 10px 10px;
-    font-size: 25px;
-    text-decoration: none;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    color: whitesmoke;
+	float: left;
+	text-align: center;
+	padding: 10px 10px;
+	font-size: 25px;
+	text-decoration: none;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: whitesmoke;
 }
 
 .topnav a:hover {
-    background-color: whitesmoke;
-    color: black;
+	background-color: whitesmoke;
+	color: black;
 }
 
 .topnav a.active {
-    background-color: rgba(41, 128, 41, 0.517);
-    color: whitesmoke;
+	background-color: rgba(41, 128, 41, 0.517);
+	color: whitesmoke;
 }
 
 .topnav div.account {
-    float: right;
-
+	float: right;
 }
 
 .main {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: lightgray;
-    border: 5px solid black;                             
-    padding: 5px;
-    border-radius: 0px 0px 10px 10px;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	background-color: lightgray;
+	border: 5px solid black;
+	padding: 5px;
+	border-radius: 0px 0px 10px 10px;
 }
 
 /* post styling */
 div.f_post {
-    background-color: rgb(181, 179, 179);
-    border: 5px solid black;
-    padding: 5px;
-    margin: 10px;
-    border-radius: 10px;
+	background-color: rgb(181, 179, 179);
+	border: 5px solid black;
+	padding: 5px;
+	margin: 10px;
+	border-radius: 10px;
 }
 
 .f_post:hover {
-    background-color: rgb(150,150,150);
-    box-shadow: 3px 3px 10px black;
+	background-color: rgb(150, 150, 150);
+	box-shadow: 3px 3px 10px black;
 }
 
-a, p, h1, .f_post{
-    text-decoration: none;
-    color: inherit;
+a,
+p,
+h1,
+.f_post {
+	text-decoration: none;
+	color: inherit;
 }
 
-h1.post_title{
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-size: 22px;
-    padding: 0px;
-    margin: 0px;
-} 
+h1.post_title {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-weight: bold;
+	font-size: 22px;
+	padding: 0px;
+	margin: 0px;
+}
 
 p.author {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-style: italic;
-    font-size: 16px;
-    padding: 0px;
-    margin: 0px;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-style: italic;
+	font-size: 16px;
+	padding: 0px;
+	margin: 0px;
 }
 
 /*username link */
 a.username:hover {
-    text-shadow: 0px 0px 1px rgb(0, 0, 0);
-    color: rgb(50, 100, 21);
+	text-shadow: 0px 0px 1px rgb(0, 0, 0);
+	color: rgb(50, 100, 21);
 }
 
 a.topic-sub-heading:hover {
-    text-shadow: 0px 0px 1px rgb(0, 0, 0);
-    color: rgb(50, 100, 21);
+	text-shadow: 0px 0px 1px rgb(0, 0, 0);
+	color: rgb(50, 100, 21);
 }
 
 a.post-heading:hover {
-    text-shadow: 0px 0px 2px rgb(2, 33, 9);
-    color: rgb(50, 100, 21);
+	text-shadow: 0px 0px 2px rgb(2, 33, 9);
+	color: rgb(50, 100, 21);
 }
 
 p.post-info {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-style: italic;
-    font-size: 12px;
-    padding: 0px;
-    margin: 0px;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-style: italic;
+	font-size: 12px;
+	padding: 0px;
+	margin: 0px;
 }
 
 /*content within post*/
 p.content {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-style: normal;
-    font-size: 14px;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-style: normal;
+	font-size: 14px;
 }
 
 /* main post div on a post specific page */
 div.selected-post {
-    background-color: rgb(138, 150, 136);
-    border: 5px solid black;
-    padding: 5px;
-    margin: 0px 0px 10px 0px;
-    border-radius: 10px;
+	background-color: rgb(138, 150, 136);
+	border: 5px solid black;
+	padding: 5px;
+	margin: 0px 0px 10px 0px;
+	border-radius: 10px;
 }
 
 /*comment replying to post*/
 div.base-comment {
-    background-color: rgb(195, 195, 195);
-    border: 5px solid black;
-    padding: 2px;
-    margin: 2px;
-    border-radius: 10px;
-
+	background-color: rgb(195, 195, 195);
+	border: 5px solid black;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 10px;
 }
 
 /*comment replying to comment*/
 div.reply {
-    background-color: rgb(225, 221, 221);
-    border: 5px solid black;
-    padding: 2px;
-    margin: 2px;
-    border-radius: 10px;
+	background-color: rgb(225, 221, 221);
+	border: 5px solid black;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 10px;
 }
 
 /* about page stat block div */
 div.stat-block {
-    border: 1px solid black;
-    padding: 5px;
+	border: 1px solid black;
+	padding: 5px;
 }
 
 p.quote {
-    background-color: grey;
-    border: 2px solid darkgray;
-    font-style: italic;
+	background-color: grey;
+	border: 2px solid darkgray;
+	font-style: italic;
 }
 
 #new-post-content {
-    width: 300px;
-    height: 100px;
-    margin: 2px;
+	width: 300px;
+	height: 100px;
+	margin: 2px;
 }
 
 #add-post-div {
-    border: 2px dotted black;
-    margin: 25px;
-    padding: 10px 5px 10px 5px;
-    border-radius: 10px;
+	border: 2px dotted black;
+	margin: 25px;
+	padding: 10px 5px 10px 5px;
+	border-radius: 10px;
 }
 
 p.stat-heading {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 20px;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 20px;
 }
 
 #new-comment-content {
-    width: 300px;
-    height: 100px;
-    margin: 2px;
+	width: 300px;
+	height: 100px;
+	margin: 2px;
 }
 
 #add-comment-div {
-    border: 2px dotted black;
-    margin: 25px;
-    padding: 10px 5px 10px 5px;
-    border-radius: 10px;
+	border: 2px dotted black;
+	margin: 25px;
+	padding: 10px 5px 10px 5px;
+	border-radius: 10px;
 }
-
-
-

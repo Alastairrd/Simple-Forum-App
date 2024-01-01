@@ -10,11 +10,13 @@ const app = express();
 const port = 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(session({
-	secret: 'keyboard otter',
-	resave: false,
-	saveUninitialized: false
-  }))
+app.use(
+	session({
+		secret: "keyboard otter",
+		resave: false,
+		saveUninitialized: false,
+	})
+);
 
 // Define the database connection
 const db = mysql.createConnection({
@@ -48,8 +50,8 @@ app.set("view engine", "ejs");
 app.engine("html", ejs.renderFile);
 
 let forumData = {
-	appName: "Happy lil' Forum"
-}
+	appName: "Happy lil' Forum",
+};
 // Requires the main.js file inside the routes folder passing in the Express app and data as arguments.  All the routes will go in this file
 require("./routes/main")(app, forumData);
 

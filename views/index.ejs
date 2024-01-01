@@ -1,54 +1,55 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Welcome to <%=appName %></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./"><%=appName%></a>
-				<a href="list">Lists</a>
-				<a href="search">Search</a>
-				<a href="about">About</a>
-				<!--if no user, show login-->
-				<% if(user == null){ %>
-					<div class="account" id="login">
-						<a href="login">Log in</a>
-					</div>
-				<!--if user exists, show logout-->
-				<% } else { %>
-					<div class="account" id="logout">
-						<a href="logout">Logout</a>
-					</div>
-				<% } %>
-				
-				
-			</nav>
-		</header>
-		<main>
-			<div class="main" id="top_Topics">
-				<!--Creates a series of divs for the top 3 topics that are subscribed to-->
-				<h1>Featured Topics</h1>
-				<% if(user != null) { %>
-					<h2>Welcome <%=user%>!</h2>
-				<% } %>
-				<% for(let i = 0; i < topics.length; i++) { %>
 
-					<!--enclose everything in a link-->
-					<!--encodeURIComponent makes sure we can handle special characters-->
-				<a
-					href="/topic?id=<%= topics[i][0].topic_id %>&name=<%= encodeURIComponent(topics[i][0].topic_name.replace(/\s/g, "-")) %>"
-				>
-				<!--list the topic name and description-->
-					<div class="f_post">
-						<h1><%= topics[i][0].topic_name %></h1>
-						<p><%= topics[i][0].topic_desc %></p>
-					</div>
-				</a>
+<head>
+  <title>Welcome to <%=appName %></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
 
-				<% } %>
-			</div>
-		</main>
-	</body>
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./"><%=appName%></a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <a href="about">About</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+
+
+    </nav>
+  </header>
+  <main>
+    <div class="main" id="top_Topics">
+      <!--Creates a series of divs for the top 3 topics that are subscribed to-->
+      <h1>Featured Topics</h1>
+      <% if(user != null) { %>
+      <h2>Welcome <%=user%>!</h2>
+      <% } %>
+      <% for(let i = 0; i < topics.length; i++) { %>
+
+      <!--enclose everything in a link-->
+      <!--encodeURIComponent makes sure we can handle special characters-->
+      <a href="/topic?id=<%= topics[i][0].topic_id %>&name=<%= encodeURIComponent(topics[i][0].topic_name.replace(/\s/g, "-")) %>">
+        <!--list the topic name and description-->
+        <div class="f_post">
+          <h1><%= topics[i][0].topic_name %></h1>
+          <p><%= topics[i][0].topic_desc %></p>
+        </div>
+      </a>
+
+      <% } %>
+    </div>
+  </main>
+</body>
+
 </html>

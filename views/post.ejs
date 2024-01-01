@@ -1,158 +1,150 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title><%=appName %> : <%=topicName %> : <%=postTitle%></title>
-		<link rel="stylesheet" type="text/css" href="/main.css" />
-	</head>
 
-	<!--script for displaying comment reply section-->
-	<script>
-		function showReplyDiv(button_id, previous_id, user, user_id, isSubscribed) {
-			if(isSubscribed && user != null){
-				document.getElementById("reply_"+ button_id).innerHTML = 
-					'<div id="add-comment-div">'
-					+	'<p>Add a new reply:</p>'
-					+	'<form method="POST" action="/addComment">'
-					+	'	<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>'
-					+	'	<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>'
-					+	'	<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>'
-					+		`<input id="previous_id" type="hidden" name="previous_id" value="${previous_id}"/>`
-					+		'<input id="url" type="hidden" name="url" value="<%=url%>"/>'
-				
-					+		'<label for="new_Comment">Content:</label>'
-					+		'<input id="new-comment-content" type="text" name="content" value="" maxlength="1000"/>'
-					+		'<input type="submit" value="Post Comment" />'
-					+	'</form>'
-					+ '</div>';
-			} else {
-				console.log(document.getElementById("reply_"+ button_id))
-				document.getElementById("reply_"+ button_id).innerHTML = '<p>Please join the topic before replying to comments.</p>'
-			}
-		}
-	  </script>
-	<body>
-		<header>
-			<nav class="topnav">
-				<a class="active" href="./"><%=appName%></a>
-				<a href="list">Lists</a>
-				<a href="search">Search</a>
-				<a href="about">About</a>
-				<!--if no user, show login-->
-				<% if(user == null){ %>
-					<div class="account" id="login">
-						<a href="login">Log in</a>
-					</div>
-				<!--if user exists, show logout-->
-				<% } else { %>
-					<div class="account" id="logout">
-						<a href="logout">Logout</a>
-					</div>
-				<% } %>
-			</nav>
-		</header>
-		<main>
-			<!--main post div-->
-			<div class="main">
-				<!--div for the main post in question-->
-				<div class="selected-post">
-					<!--main post details and content-->
-					<h1 class="post_title"><%=postTitle %></h1>
+<head>
+  <title><%=appName %> : <%=topicName %> : <%=postTitle%></title>
+  <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
 
-					<!--author of post with link-->
-					<p class="author">
-						Posted by:
-						<a
-							class="username"
-							href="user?username=<%= encodeURIComponent(post[0].username) %>"
-							><%= post[0].username%></a
-						>
-					</p>
-					<!--date of post-->
-					<p class="post-info">
-						Date posted: <%=post[0].datetime%>
-					  </p>
-					<!--content of post-->
-					<p class="content"><%=post[0].content%></p>
+<!--script for displaying comment reply section-->
+<script>
+  function showReplyDiv(button_id, previous_id, user, user_id, isSubscribed) {
+    if (isSubscribed == "true" && user != "") {
+      document.getElementById("reply_" + button_id).innerHTML =
+        '<div id="add-comment-div">' +
+        '<p>Add a new reply:</p>' +
+        '<form method="POST" action="/addComment">' +
+        '	<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>' +
+        '	<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>' +
+        '	<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>' +
+        `<input id="previous_id" type="hidden" name="previous_id" value="${previous_id}"/>` +
+        '<input id="url" type="hidden" name="url" value="<%=url%>"/>'
 
-					<div id="add-comment-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
-						<p>Add a new comment:</p>
-						<form method="POST" action="/addComment">
-							<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
-							<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>
-							<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>
-							<input id="previous_id" type="hidden" name="previous_id" value=""/>
-							<input id="url" type="hidden" name="url" value="<%=url%>"/>
-				
-							<label for="new_Comment">Content:</label>
-							<input id="new-comment-content" type="text" name="content" value="" maxlength="1000"/>
-							<input type="submit" value="Post Comment" />
-						</form>
-					</div>
-					<% if(user == null) { %>
-						<p>You are not logged in. Log in to subscribe and add comments to posts. </p>
-					<% } else if (user != null && !isSubscribed) { %>
-						<p>Hi there, <%=user%>, you are not subscribed to <a class="topic-sub-heading" href="/topic?id=<%= post[0].topic_id
+        +
+        '<label for="new_Comment">Content:</label>' +
+        '<input id="new-comment-content" type="text" name="content" value="" maxlength="1000"/>' +
+        '<input type="submit" value="Post Comment" />' +
+        '</form>' +
+        '</div>';
+    } else {
+      console.log(document.getElementById("reply_" + button_id))
+      document.getElementById("reply_" + button_id).innerHTML = '<p>Please join the topic before replying to comments.</p>'
+    }
+  }
+</script>
+
+<body>
+  <header>
+    <nav class="topnav">
+      <a class="active" href="./"><%=appName%></a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <a href="about">About</a>
+      <!--if no user, show login-->
+      <% if(user == null){ %>
+      <div class="account" id="login">
+        <a href="login">Log in</a>
+      </div>
+      <!--if user exists, show logout-->
+      <% } else { %>
+      <div class="account" id="logout">
+        <a href="logout">Logout</a>
+      </div>
+      <% } %>
+    </nav>
+  </header>
+  <main>
+    <!--main post div-->
+    <div class="main">
+      <!--div for the main post in question-->
+      <div class="selected-post">
+        <!--main post details and content-->
+        <h1 class="post_title"><%=postTitle %></h1>
+
+        <!--author of post with link-->
+        <p class="author">
+          Posted by:
+          <a class="username" href="user?username=<%= encodeURIComponent(post[0].username) %>"><%= post[0].username%></a>
+        </p>
+        <!--date of post-->
+        <p class="post-info">
+          Date posted: <%=post[0].datetime%>
+        </p>
+        <!--content of post-->
+        <p class="content"><%=post[0].content%></p>
+
+        <div id="add-comment-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
+          <p>Add a new comment:</p>
+          <form method="POST" action="/addComment">
+            <input id="user_id" type="hidden" name="user_id" value="<%=user_id%>" />
+            <input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>" />
+            <input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>" />
+            <input id="previous_id" type="hidden" name="previous_id" value="" />
+            <input id="url" type="hidden" name="url" value="<%=url%>" />
+
+            <label for="new_Comment">Content:</label>
+            <input id="new-comment-content" type="text" name="content" value="" maxlength="1000" />
+            <input type="submit" value="Post Comment" />
+          </form>
+        </div>
+        <% if(user == null) { %>
+        <p>You are not logged in. Log in to subscribe and add comments to posts. </p>
+        <% } else if (user != null && !isSubscribed) { %>
+        <p>Hi there, <%=user%>, you are not subscribed to <a class="topic-sub-heading" href="/topic?id=<%= post[0].topic_id
 							%>&name=<%=
 							encodeURIComponent(topicName.replace(/\s/g,
 							"-")) %>"><%=topicName%></a>.</p>
-					<% } %>
-				</div>
+        <% } %>
+      </div>
 
-				<!--comments section-->
-				<% for(i=0; i < comments.length; i++) { %> 
-					<!--if the comment is replying to the post, not another comment-->
-				<% if(comments[i].previous_id == null) { %>
-				<div class="base-comment">
+      <!--comments section-->
+      <% for(i=0; i < comments.length; i++) { %>
+      <!--if the comment is replying to the post, not another comment-->
+      <% if(comments[i].previous_id == null) { %>
+      <div class="base-comment">
 
-					<!--author of comment with link-->
-					<p class="author">
-						Posted by:
-						<a
-							class="username"
-							href="user?username=<%= encodeURIComponent(comments[i].username) %>"
-							><%= comments[i].username%></a
-						>
-					</p>
+        <!--author of comment with link-->
+        <p class="author">
+          Posted by:
+          <a class="username" href="user?username=<%= encodeURIComponent(comments[i].username) %>"><%= comments[i].username%></a>
+        </p>
 
-					<!--date comment posted-->
-					<p class="post-info">
-						Date posted: <%=comments[i].datetime%>
-					  </p>
+        <!--date comment posted-->
+        <p class="post-info">
+          Date posted: <%=comments[i].datetime%>
+        </p>
 
-					  <!--comment content-->
-					<p class="content"><%=comments[i].content%></p>
-					<button id="<%=i%>"class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
-					<div id="reply_<%=i%>"></div>
-				</div>
-				<% }else{ %>
-				<div class="reply">
+        <!--comment content-->
+        <p class="content"><%=comments[i].content%></p>
+        <button id="<%=i%>" class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
+        <div id="reply_<%=i%>"></div>
+      </div>
+      <% }else{ %>
+      <div class="reply">
 
-					<!--author of comment with link-->
-					<p class="author">
-						Posted by:
-						<a
-							class="username"
-							href="user?username=<%= encodeURIComponent(comments[i].username) %>"
-							><%= comments[i].username%></a
-						>
-					</p>
-					<!--date comment posted-->
-					<p class="post-info">
-						Date posted: <%=comments[i].datetime%>
-					  </p>
-					</br>
+        <!--author of comment with link-->
+        <p class="author">
+          Posted by:
+          <a class="username" href="user?username=<%= encodeURIComponent(comments[i].username) %>"><%= comments[i].username%></a>
+        </p>
+        <!--date comment posted-->
+        <p class="post-info">
+          Date posted: <%=comments[i].datetime%>
+        </p>
+        </br>
 
-					<!--quote of original post-->
+        <!--quote of original post-->
 
-					  <p class="quote">Replying to <%=comments[i].quote_Username%>: "<%=comments[i].quote_Content%>"</p>
-					
-					  <!--comment content-->
-					<p class="content"><%=comments[i].content%></p>
-					<button id="<%=i%>"class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
-					<div id="reply_<%=i%>"></div>
-				</div>
-				<% } } %>
-			</div>
-		</main>
-	</body>
+        <p class="quote">Replying to <%=comments[i].quote_Username%>: "<%=comments[i].quote_Content%>"</p>
+
+        <!--comment content-->
+        <p class="content"><%=comments[i].content%></p>
+        <button id="<%=i%>" class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
+        <div id="reply_<%=i%>"></div>
+      </div>
+      <% } } %>
+    </div>
+  </main>
+</body>
+
 </html>

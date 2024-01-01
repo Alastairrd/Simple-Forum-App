@@ -9,10 +9,10 @@
 <body>
   <header>
     <nav class="topnav">
-	<a class="active" href="./"><%=appName%></a>
-    <a href="list">Lists</a>
-    <a href="search">Search</a>
-    <a href="about">About</a>
+      <a class="active" href="./"><%=appName%></a>
+      <a href="list">Lists</a>
+      <a href="search">Search</a>
+      <a href="about">About</a>
       <!--if no user, show login-->
       <% if(user == null){ %>
       <div class="account" id="login">
@@ -34,65 +34,65 @@
       <h3><%=topic.topic_desc%></h3>
       <!--if user is not subscribed to topic, show sub button-->
       <% if(user == null) { %>
-      	<p>You are not logged in. Log in to subscribe and post. </p>
+      <p>You are not logged in. Log in to subscribe and post. </p>
       <% } else if (user != null && isSubscribed) { %>
-      	<p>Welcome back, <%=user%>! You are subscribed to <%=topic.topic_name%>.</p>
+      <p>Welcome back, <%=user%>! You are subscribed to <%=topic.topic_name%>.</p>
       <% } else if (user != null && !isSubscribed) { %>
-      	<p>Hi there, <%=user%>, you are not subscribed to <%=topic.topic_name%>.</p>
+      <p>Hi there, <%=user%>, you are not subscribed to <%=topic.topic_name%>.</p>
 
       <!--button-->
-	<form method="POST" action="/subscribe">
-		<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
-		<input id="topic_id" type="hidden" name="topic_id" value="<%=topic.topic_id%>"/>
-		<input id="url" type="hidden" name="url" value="<%=url%>"/>
-		<input type="submit" value="Join Topic" />
-	</form>
+      <form method="POST" action="/subscribe">
+        <input id="user_id" type="hidden" name="user_id" value="<%=user_id%>" />
+        <input id="topic_id" type="hidden" name="topic_id" value="<%=topic.topic_id%>" />
+        <input id="url" type="hidden" name="url" value="<%=url%>" />
+        <input type="submit" value="Join Topic" />
+      </form>
       <% } %>
 
-	  <!--todo make add post to topic-->
-    <!--if user is subscribed to topic, show post div-->
-	<div id="add-post-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
-		<p>Add a new post:</p>
-		<form method="POST" action="/addPost">
-			<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
-			<input id="topic_id" type="hidden" name="topic_id" value="<%=topic.topic_id%>"/>
-			<input id="url" type="hidden" name="url" value="<%=url%>"/>
+      <!--todo make add post to topic-->
+      <!--if user is subscribed to topic, show post div-->
+      <div id="add-post-div" style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
+        <p>Add a new post:</p>
+        <form method="POST" action="/addPost">
+          <input id="user_id" type="hidden" name="user_id" value="<%=user_id%>" />
+          <input id="topic_id" type="hidden" name="topic_id" value="<%=topic.topic_id%>" />
+          <input id="url" type="hidden" name="url" value="<%=url%>" />
 
-			<label for="new_Post_Name">Post title:</label>
-			<input id="new-post-title" type="text" name="title" value="" maxlength="360"/> </br>
+          <label for="new_Post_Name">Post title:</label>
+          <input id="new-post-title" type="text" name="title" value="" maxlength="360" /> </br>
 
-			<label for="new_Post_Content">Content:</label>
-			<input id="new-post-content" type="text" name="content" value="" maxlength="10000"/>
-			<input type="submit" value="Post" />
-		</form>
-	</div>
-	
+          <label for="new_Post_Content">Content:</label>
+          <input id="new-post-content" type="text" name="content" value="" maxlength="10000" />
+          <input type="submit" value="Post" />
+        </form>
+      </div>
 
-    <div>
 
-      <p>Most recent posts:</p>
-      <% for(let i = 0; i < posts.length; i++) { %>
+      <div>
 
-      <!--enclose everything in a link-->
-      <!--encodeURIComponent makes sure we can handle special characters-->
-      <a href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=topic.topic_name.replace(/\s/g, "-") %>">
-        <!--list the post details-->
-        <!--todo add datetime-->
-        <div class="f_post">
-          <h1 class="post_title"><%= posts[i].title %></h1>
-          <p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
-		  <p class="post-info">
-			Date posted: <%=posts[i].datetime%>
-		  </p>
-          <p class="content"><%= posts[i].content %></p>
-        </div>
-      </a>
+        <p>Most recent posts:</p>
+        <% for(let i = 0; i < posts.length; i++) { %>
 
-      <% } %>
+        <!--enclose everything in a link-->
+        <!--encodeURIComponent makes sure we can handle special characters-->
+        <a href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=topic.topic_name.replace(/\s/g, "-") %>">
+          <!--list the post details-->
+          <!--todo add datetime-->
+          <div class="f_post">
+            <h1 class="post_title"><%= posts[i].title %></h1>
+            <p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
+            <p class="post-info">
+              Date posted: <%=posts[i].datetime%>
+            </p>
+            <p class="content"><%= posts[i].content %></p>
+          </div>
+        </a>
+
+        <% } %>
+      </div>
+
     </div>
 
-	</div>
-    
   </main>
 </body>
 
