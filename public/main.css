@@ -26,6 +26,11 @@
 	color: whitesmoke;
 }
 
+.topnav a.active:hover {
+	background-color: rgba(27, 83, 27, 0.517);
+	color: whitesmoke;
+}
+
 .topnav div.account {
 	float: right;
 }

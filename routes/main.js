@@ -86,7 +86,7 @@ module.exports = function (app, forumData) {
 		//return all topics
 		const topics = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT * from TOPICS ORDER BY topic_id ASC`,
+				`SELECT * from topics ORDER BY topic_id ASC`,
 				(error, results) => {
 					if (error) {
 						reject(error);
@@ -154,7 +154,7 @@ module.exports = function (app, forumData) {
 		//return all topics
 		const topics = await new Promise((resolve, reject) => {
 			db.query(
-				`SELECT topic_name, topic_id from TOPICS ORDER BY topic_id ASC`,
+				`SELECT topic_name, topic_id from topics ORDER BY topic_id ASC`,
 				(error, results) => {
 					if (error) {
 						reject(error);
@@ -173,7 +173,6 @@ module.exports = function (app, forumData) {
 			user: req.session.user,
 		});
 
-		console.log(newData)
 		res.render("about.ejs", newData);
 	});
 
@@ -247,8 +246,6 @@ module.exports = function (app, forumData) {
 		//logic for searching
 		let postData = null;
 
-		console.log(req.query.keyword);
-
 		//if we have a keyword, look for search results
 		if (req.query.keyword != undefined) {
 			postData = await new Promise((resolve, reject) => {
@@ -261,14 +258,11 @@ module.exports = function (app, forumData) {
 							reject(error);
 						} else {
 							resolve(results);
-							console.log(results)
 						}
 					}
 				);
 			});
 		}
-
-		console.log(postData)
 
 		//check we have results
 		if (postData != null) {
@@ -284,8 +278,6 @@ module.exports = function (app, forumData) {
 			posts: postData,
 			user: req.session.user,
 		});
-
-		console.log(newData)
 
 		res.render("search.ejs", newData);
 	});
@@ -376,7 +368,7 @@ module.exports = function (app, forumData) {
 			user_id: req.session.user_id,
 			isSubscribed: isUserSubscribed,
 			url: req.originalUrl,
-			subs: subCount.count
+			subs: subCount.count,
 		});
 
 		//render topic page with topic data
@@ -463,10 +455,8 @@ module.exports = function (app, forumData) {
 
 			//if comment is a reply to another comment
 			if (comResults[0][i].previous_id != null) {
-
 				//loop through comments
 				for (j = 0; j < comResults.length; j++) {
-
 					//if comment is a match to the id of the comment being replied to
 					if (
 						comResults[0][j].reply_id ==
@@ -500,7 +490,6 @@ module.exports = function (app, forumData) {
 	});
 
 	app.get("/login", function (req, res) {
-
 		//sets some base variables and passes user in for page rendering
 		let newData = Object.assign({}, forumData, {
 			loginFailed: false,
@@ -511,7 +500,6 @@ module.exports = function (app, forumData) {
 	});
 
 	app.post("/login", async function (req, res) {
-	
 		//variable set up for login validation
 		const inputUser = req.body.user;
 		const inputPass = req.body.pass;
@@ -553,7 +541,7 @@ module.exports = function (app, forumData) {
 				// load does not happen before session is saved
 				req.session.save(function (err) {
 					if (err) return next(err);
-					res.redirect("/");
+					res.redirect("http://www.doc.gold.ac.uk/usr/717/");
 				});
 			});
 		}
@@ -573,7 +561,7 @@ module.exports = function (app, forumData) {
 			// guard against forms of session fixation
 			req.session.regenerate(function (err) {
 				if (err) next(err);
-				res.redirect("/");
+				res.redirect("http://www.doc.gold.ac.uk/usr/717/");
 			});
 		});
 	});
@@ -713,8 +701,6 @@ module.exports = function (app, forumData) {
 				isUserSubscribed = true;
 			}
 		}
-
-		console.log(req.body.previous_id);
 
 		//check user is subscribed again, just in case
 		if (isUserSubscribed == true && req.body.previous_id != "") {

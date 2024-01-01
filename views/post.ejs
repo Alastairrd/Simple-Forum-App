@@ -13,7 +13,7 @@
       document.getElementById("reply_" + button_id).innerHTML =
         '<div id="add-comment-div">' +
         '<p>Add a new reply:</p>' +
-        '<form method="POST" action="/addComment">' +
+        '<form method="POST" action="http://www.doc.gold.ac.uk/usr/717/addComment">' +
         '	<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>' +
         '	<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>' +
         '	<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>' +
@@ -27,7 +27,6 @@
         '</form>' +
         '</div>';
     } else {
-      console.log(document.getElementById("reply_" + button_id))
       document.getElementById("reply_" + button_id).innerHTML = '<p>You must join the topic before you can reply.</p>'
     }
   }
