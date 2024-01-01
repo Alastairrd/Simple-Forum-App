@@ -10,7 +10,7 @@ CREATE TABLE `posts` (
   `like_count` int NOT NULL DEFAULT '0',
   `datetime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`post_id`)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE `replies` (
   `reply_id` int NOT NULL AUTO_INCREMENT,
@@ -22,14 +22,14 @@ CREATE TABLE `replies` (
   `post_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`reply_id`)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE `topics` (
   `topic_id` int NOT NULL AUTO_INCREMENT,
   `topic_name` varchar(45) NOT NULL,
   `topic_desc` varchar(400) DEFAULT NULL,
   PRIMARY KEY (`topic_id`)
-) ENGINE=InnoDB;
+);
 
 CREATE TABLE `users` (
   `user_id` int NOT NULL AUTO_INCREMENT,
@@ -43,7 +43,7 @@ CREATE TABLE `users` (
 CREATE TABLE `subscriptions` (
   `user_id` int NOT NULL,
   `topic_id` int NOT NULL
-) ENGINE=InnoDB;
+);
 
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getComments`(IN postID int)
