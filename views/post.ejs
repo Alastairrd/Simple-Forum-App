@@ -4,6 +4,32 @@
 		<title><%=appName %> : <%=topicName %> : <%=postTitle%></title>
 		<link rel="stylesheet" type="text/css" href="/main.css" />
 	</head>
+
+	<!--script for displaying comment reply section-->
+	<script>
+		function showReplyDiv(button_id, previous_id, user, user_id, isSubscribed) {
+			if(isSubscribed && user != null){
+				document.getElementById("reply_"+ button_id).innerHTML = 
+					'<div id="add-comment-div">'
+					+	'<p>Add a new reply:</p>'
+					+	'<form method="POST" action="/addComment">'
+					+	'	<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>'
+					+	'	<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>'
+					+	'	<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>'
+					+		`<input id="previous_id" type="hidden" name="previous_id" value="${previous_id}"/>`
+					+		'<input id="url" type="hidden" name="url" value="<%=url%>"/>'
+				
+					+		'<label for="new_Comment">Content:</label>'
+					+		'<input id="new-comment-content" type="text" name="content" value="" maxlength="1000"/>'
+					+		'<input type="submit" value="Post Comment" />'
+					+	'</form>'
+					+ '</div>';
+			} else {
+				console.log(document.getElementById("reply_"+ button_id))
+				document.getElementById("reply_"+ button_id).innerHTML = '<p>Please join the topic before replying to comments.</p>'
+			}
+		}
+	  </script>
 	<body>
 		<header>
 			<nav class="topnav">
@@ -47,6 +73,29 @@
 					  </p>
 					<!--content of post-->
 					<p class="content"><%=post[0].content%></p>
+
+					<div id="add-comment-div"style="<% if(user != null && isSubscribed){ %> display: block <% } else { %> display: none <% } %>">
+						<p>Add a new comment:</p>
+						<form method="POST" action="/addComment">
+							<input id="user_id" type="hidden" name="user_id" value="<%=user_id%>"/>
+							<input id="post_id" type="hidden" name="post_id" value="<%=post[0].post_id%>"/>
+							<input id="topic_id" type="hidden" name="topic_id" value="<%=post[0].topic_id%>"/>
+							<input id="previous_id" type="hidden" name="previous_id" value=""/>
+							<input id="url" type="hidden" name="url" value="<%=url%>"/>
+				
+							<label for="new_Comment">Content:</label>
+							<input id="new-comment-content" type="text" name="content" value="" maxlength="1000"/>
+							<input type="submit" value="Post Comment" />
+						</form>
+					</div>
+					<% if(user == null) { %>
+						<p>You are not logged in. Log in to subscribe and add comments to posts. </p>
+					<% } else if (user != null && !isSubscribed) { %>
+						<p>Hi there, <%=user%>, you are not subscribed to <a class="topic-sub-heading" href="/topic?id=<%= post[0].topic_id
+							%>&name=<%=
+							encodeURIComponent(topicName.replace(/\s/g,
+							"-")) %>"><%=topicName%></a>.</p>
+					<% } %>
 				</div>
 
 				<!--comments section-->
@@ -72,6 +121,8 @@
 
 					  <!--comment content-->
 					<p class="content"><%=comments[i].content%></p>
+					<button id="<%=i%>"class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
+					<div id="reply_<%=i%>"></div>
 				</div>
 				<% }else{ %>
 				<div class="reply">
@@ -85,21 +136,23 @@
 							><%= comments[i].username%></a
 						>
 					</p>
+					<!--date comment posted-->
 					<p class="post-info">
 						Date posted: <%=comments[i].datetime%>
 					  </p>
 					</br>
 
-					<!--date comment posted-->
-					  <p class="quote">Replying to <%=comments[comments[i].previous_id].username%>: "<%=comments[comments[i].previous_id].content%>"</p>
+					<!--quote of original post-->
+
+					  <p class="quote">Replying to <%=comments[i].quote_Username%>: "<%=comments[i].quote_Content%>"</p>
 					
 					  <!--comment content-->
 					<p class="content"><%=comments[i].content%></p>
+					<button id="<%=i%>"class="reply" onclick="showReplyDiv(this.id, '<%=comments[i].reply_id%>', '<%=user%>', '<%=user_id%>', '<%=isSubscribed%>')">Reply</button>
+					<div id="reply_<%=i%>"></div>
 				</div>
-
 				<% } } %>
 			</div>
-			
 		</main>
 	</body>
 </html>

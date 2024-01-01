@@ -27,6 +27,30 @@
 		<main>
 			<div class="main">
 				<!--todo make search page-->
+				<h1>Post Search</h1>
+				<h2>Enter a search term below, to find related posts.</h2>
+				<form method="GET" action="/search">
+					<input id="search" type="text" name="keyword" value="" maxlength="100"/>
+					<input type="submit" value="Search" />
+				</form>
+				<div id="search-result-div"style="<% if(posts != null){ %> display: block <% } else { %> display: none <% } %>">
+						<% if(posts != null){ %>
+							<% for(i=0; i < posts.length; i++) { %>
+									<a href="/post?id=<%=posts[i].post_id %>&title=<%= encodeURIComponent(posts[i].title.replace(/\s/g, "-")) %>&topic=<%=posts[i].topic_name.replace(/\s/g, "-") %>">
+										<!--list the post details-->
+										<!--todo add datetime-->
+										<div class="f_post">
+										  <h1 class="post_title"><%= posts[i].title %></h1>
+										  <p class="author">Posted by: <a class="username" href="user?username=<%= encodeURIComponent(posts[i].username) %>"><%= posts[i].username%></a></p>
+										  <p class="post-info">
+											Date posted: <%=posts[i].datetime%>
+										  </p>
+										  <p class="content"><%= posts[i].content %></p>
+										</div>
+									  </a>
+							<% } %>
+						<% } %>
+				</div>	
 			</div>
 		</main>
 	</body>

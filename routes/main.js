@@ -97,9 +97,6 @@ module.exports = function (app, forumData) {
 			);
 		});
 
-		console.log(users)
-		console.log(posts)
-
 		//changing the post dates to format better
 		for (i = 0; i < posts.length; i++) {
 			d = new Date();
@@ -176,7 +173,6 @@ module.exports = function (app, forumData) {
 			user: req.session.user,
 		});
 
-		console.log(newData);
 		res.render("about.ejs", newData);
 	});
 
@@ -203,7 +199,6 @@ module.exports = function (app, forumData) {
 		d = new Date();
 		d = userResults[0].signup_date;
 		userResults[0].signup_date = d.toLocaleDateString();
-
 
 		//sql to get subscribed topics
 		userTopics = await new Promise((resolve, reject) => {
@@ -244,9 +239,46 @@ module.exports = function (app, forumData) {
 			user_id: req.session.user_id,
 		});
 
-		console.log(newData);
-
 		res.render("user.ejs", newData);
+	});
+
+	app.get("/search", async function (req, res) {
+		//logic for searching
+		let postData = null;
+
+		if (req.query.keyword != undefined) {
+			postData = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT * from post_topics WHERE title LIKE '%` +
+						req.query.keyword +
+						`%' ORDER BY datetime DESC`,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+		}
+
+		//check we have results
+		if (postData != null) {
+			//changing the posts dates to format better
+			for (i = 0; i < postData.length; i++) {
+				d = new Date();
+				d = postData[i].datetime;
+				postData[i].datetime = d.toLocaleString();
+			}
+		}
+
+		let newData = Object.assign({}, forumData, {
+			posts: postData,
+			user: req.session.user,
+		});
+
+		res.render("search.ejs", newData);
 	});
 
 	//TODO design topic page template
@@ -298,11 +330,24 @@ module.exports = function (app, forumData) {
 			results[0][i].datetime = d.toLocaleString();
 		}
 
+		const topicData = await new Promise((resolve, reject) => {
+			db.query(
+				`CALL selectTopicByID(?)`,
+				inputTopicID,
+				(error, result) => {
+					if (error) {
+						reject(error);
+					} else {
+						resolve(result[0]);
+					}
+				}
+			);
+		});
+
 		//create new data object, add to forum data and pass in render function
 		let newData = Object.assign({}, forumData, {
 			posts: results[0],
-			topic_id: req.query.id,
-			topicName: req.query.name,
+			topic: topicData[0],
 			user: req.session.user,
 			user_id: req.session.user_id,
 			isSubscribed: isUserSubscribed,
@@ -317,6 +362,47 @@ module.exports = function (app, forumData) {
 	app.get("/post", async function (req, res) {
 		//url has to be topic/post url combo from sql query
 		let inputPostID = req.query.id;
+		let isUserSubscribed = false;
+
+
+
+		if (req.session.user != undefined) {
+			//sql query to get all topics user is subscribed to
+			topicID = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT topic_id from topics WHERE topic_name = ?`,
+					req.query.topic,
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+
+			userTopics = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT topic_id from subscriptions WHERE user_id = ? && topic_id = ?`,
+					[req.session.user_id, topicID[0].topic_id],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+
+			//if user_id and topic_id match in subscriptions, return true, otherwise false
+			if (userTopics.length == 0) {
+				isUserSubscribed = false;
+			} else {
+				isUserSubscribed = true;
+			}
+		}
 
 		//call procedure to check post_topics views for relevant post from passed in post id
 		const results = await new Promise((resolve, reject) => {
@@ -350,8 +436,21 @@ module.exports = function (app, forumData) {
 			d = new Date();
 			d = comResults[0][i].datetime;
 			comResults[0][i].datetime = d.toLocaleString();
+
+			if(comResults[0][i].previous_id != null){
+				for(j=0; j < comResults.length; j++){
+					if(comResults[0][j].reply_id == comResults[0][i].previous_id){
+						console.log("match found")
+						comResults[0][i].quote_Username = comResults[0][j].username
+						comResults[0][i].quote_Content = comResults[0][j].content
+					}
+				}
+			}
 		}
 
+		console.log(comResults)
+
+		
 		//this object now has post, topic name, and all comments for post
 		let newData = Object.assign({}, forumData, {
 			post: results[0],
@@ -360,8 +459,12 @@ module.exports = function (app, forumData) {
 			postTitle: results[0][0].title,
 			topicName: results[0][0].topic_name.replace(/\s/g, "-"),
 			user: req.session.user,
+			user_id: req.session.user_id,
+			isSubscribed: isUserSubscribed,
+			url: req.originalUrl,
 		});
-		//todo add session user
+
+		console.log(newData)
 
 		//render page with post date
 		res.render("post.ejs", newData);
@@ -550,10 +653,8 @@ module.exports = function (app, forumData) {
 					(error, results) => {
 						if (error) {
 							reject(error);
-							console.log(error);
 						} else {
 							resolve(results);
-							console.log(results);
 						}
 					}
 				);
@@ -563,4 +664,81 @@ module.exports = function (app, forumData) {
 		//redirect back to original url
 		res.redirect(req.protocol + "://" + req.get("host") + req.body.url);
 	});
+
+	app.post("/addComment", async function (req, res) {
+		//posting comment logic
+		let isUserSubscribed = false;
+
+		//check we have active login just in case
+		if (req.session.user != undefined) {
+			//sql query to get all topics user is subscribed to
+			userTopics = await new Promise((resolve, reject) => {
+				db.query(
+					`SELECT topic_id from subscriptions WHERE user_id = ? && topic_id = ?`,
+					[req.body.user_id, req.body.topic_id],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+
+			//if user_id and topic_id match in subscriptions, return true, otherwise false
+			if (userTopics.length == 0) {
+				isUserSubscribed = false;
+			} else {
+				isUserSubscribed = true;
+			}
+		}
+
+		console.log(req.body.previous_id)
+
+		//check user is subscribed again, just in case
+		if (isUserSubscribed == true && req.body.previous_id != "") {
+			//insert reply into db
+			await new Promise((resolve, reject) => {
+				db.query(
+					`INSERT INTO replies (previous_id, content, post_id, user_id) VALUES (?, ?, ?, ?)`,
+					[	
+						req.body.previous_id,
+						req.body.content,
+						req.body.post_id,
+						req.body.user_id,
+					],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+		} else if(isUserSubscribed == true && req.body.previous_id == ""){
+			//insert reply into db
+			await new Promise((resolve, reject) => {
+				db.query(
+					`INSERT INTO replies (content, post_id, user_id) VALUES (?, ?, ?)`,
+					[	
+						req.body.content,
+						req.body.post_id,
+						req.body.user_id,
+					],
+					(error, results) => {
+						if (error) {
+							reject(error);
+						} else {
+							resolve(results);
+						}
+					}
+				);
+			});
+		}
+
+		//redirect back to original url
+		res.redirect(req.protocol + "://" + req.get("host") + req.body.url);
+	})
 };
