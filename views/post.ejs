@@ -28,7 +28,7 @@
         '</div>';
     } else {
       console.log(document.getElementById("reply_" + button_id))
-      document.getElementById("reply_" + button_id).innerHTML = '<p>Please join the topic before replying to comments.</p>'
+      document.getElementById("reply_" + button_id).innerHTML = '<p>You must join the topic before you can reply.</p>'
     }
   }
 </script>
@@ -100,7 +100,7 @@
         <p>Hi there, <%=user%>, you are not subscribed to <a class="topic-sub-heading" href="/topic?id=<%= post[0].topic_id
 							%>&name=<%=
 							encodeURIComponent(topicName.replace(/\s/g,
-							"-")) %>"><%=topicName%></a>.</p>
+							"-")) %>"><%=topicName%></a>. You must join the topic before you can comment.</p>
         <% } %>
       </div>
 

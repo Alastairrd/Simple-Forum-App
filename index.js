@@ -10,6 +10,7 @@ const app = express();
 const port = 8000;
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//setting up session for logins
 app.use(
 	session({
 		secret: "keyboard otter",

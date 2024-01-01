@@ -30,6 +30,7 @@
 	float: right;
 }
 
+/*main div styling*/
 .main {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
 		"Lucida Sans", Arial, sans-serif;
@@ -70,6 +71,7 @@ h1.post_title {
 	margin: 0px;
 }
 
+/*used to author names*/
 p.author {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
 		"Lucida Sans", Arial, sans-serif;
@@ -85,6 +87,7 @@ a.username:hover {
 	color: rgb(50, 100, 21);
 }
 
+/*used for more details related sub headings*/
 a.topic-sub-heading:hover {
 	text-shadow: 0px 0px 1px rgb(0, 0, 0);
 	color: rgb(50, 100, 21);
@@ -95,6 +98,7 @@ a.post-heading:hover {
 	color: rgb(50, 100, 21);
 }
 
+/*post info and details*/
 p.post-info {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
 		"Lucida Sans", Arial, sans-serif;
@@ -110,6 +114,9 @@ p.content {
 		"Lucida Sans", Arial, sans-serif;
 	font-style: normal;
 	font-size: 14px;
+	border: 1px dotted black;
+	border-radius: 20px;
+	padding: 5px;
 }
 
 /* main post div on a post specific page */
@@ -125,7 +132,7 @@ div.selected-post {
 div.base-comment {
 	background-color: rgb(195, 195, 195);
 	border: 5px solid black;
-	padding: 2px;
+	padding: 5px;
 	margin: 2px;
 	border-radius: 10px;
 }
@@ -134,8 +141,9 @@ div.base-comment {
 div.reply {
 	background-color: rgb(225, 221, 221);
 	border: 5px solid black;
-	padding: 2px;
+	padding: 5px;
 	margin: 2px;
+    margin-left: 20px;
 	border-radius: 10px;
 }
 
@@ -145,18 +153,22 @@ div.stat-block {
 	padding: 5px;
 }
 
+/*quoted text of a reply to comment*/
 p.quote {
 	background-color: grey;
 	border: 2px solid darkgray;
 	font-style: italic;
+    margin: 0px;
 }
 
+/*new post content input box*/
 #new-post-content {
 	width: 300px;
 	height: 100px;
 	margin: 2px;
 }
 
+/*new post div styling */
 #add-post-div {
 	border: 2px dotted black;
 	margin: 25px;
@@ -164,6 +176,7 @@ p.quote {
 	border-radius: 10px;
 }
 
+/*stat heading on about page*/
 p.stat-heading {
 	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
 		"Lucida Sans", Arial, sans-serif;
@@ -172,12 +185,14 @@ p.stat-heading {
 	font-size: 20px;
 }
 
+/*new comment input box*/
 #new-comment-content {
 	width: 300px;
 	height: 100px;
 	margin: 2px;
 }
 
+/*div for making new comment*/
 #add-comment-div {
 	border: 2px dotted black;
 	margin: 25px;
@@ -185,6 +200,7 @@ p.stat-heading {
 	border-radius: 10px;
 }
 
+/*counts on topic page*/
 .count {
     float: right;
 }
